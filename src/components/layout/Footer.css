@@ -1,0 +1,54 @@
+/* Footer — shown on desktop, hidden on mobile (bottom nav takes over) */
+
+.footer {
+  background: white;
+  border-top: 1px solid var(--border-mid);
+  margin-top: auto;
+}
+
+.footer-inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 40px var(--page-pad) 28px;
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.footer-brand    { flex: 1; min-width: 200px; }
+.footer-logo     { font-family: var(--font-display); font-size: 1.5rem; color: var(--teal); display: block; margin-bottom: 7px; }
+.footer-brand p  { font-size: 0.88rem; color: var(--text-light); font-weight: 700; }
+
+.footer-links    { display: flex; gap: 48px; flex-wrap: wrap; }
+.footer-col      { display: flex; flex-direction: column; gap: 10px; min-width: 120px; }
+.footer-col-title {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  margin-bottom: 2px;
+}
+.footer-col a {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-col a:hover { color: var(--teal); }
+
+.footer-bottom {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 14px var(--page-pad) 18px;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--text-light);
+  font-weight: 700;
+}
+
+/* Hide footer on mobile — bottom nav is the primary nav */
+@media (max-width: 768px) {
+  .footer { display: none; }
+}
