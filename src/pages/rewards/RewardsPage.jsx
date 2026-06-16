@@ -1,6 +1,6 @@
 // REWARDS PAGE - Star counter and milestones
 import { Link } from "react-router-dom";
-import { useStars, MILESTONES } from "../data/StarsContext";
+import { useStars, MILESTONES } from "../../data/StarsContext";
 import "./RewardsPage.css";
 
 export default function RewardsPage() {

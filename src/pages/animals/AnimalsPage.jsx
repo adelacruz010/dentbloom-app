@@ -1,8 +1,8 @@
 // ANIMAL FRIENDS PAGE + Individual animal pages
 import { Link, useParams } from "react-router-dom";
-import { ANIMALS } from "../data/content";
-import { AssetImg, EarnStarBtn } from "../components/ui/shared";
-import { useStars } from "../data/StarsContext";
+import { ANIMALS } from "../../data/content";
+import { AssetImg, EarnStarBtn } from "../../components/ui/shared";
+import { useStars } from "../../data/StarsContext";
 import { useState } from "react";
 import "./AnimalsPage.css";
 

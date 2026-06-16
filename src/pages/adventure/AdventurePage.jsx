@@ -4,9 +4,9 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useStars } from "../data/StarsContext";
-import { SONGS, STORIES, ACTIVITIES } from "../data/content";
-import { VideoEmbed } from "../components/ui/shared";
+import { useStars } from "../../data/StarsContext";
+import { SONGS, STORIES, ACTIVITIES } from "../../data/content";
+import { VideoEmbed } from "../../components/ui/shared";
 import "./AdventurePage.css";
 
 const STEPS = ["intro", "song", "story", "activity", "reward"];
