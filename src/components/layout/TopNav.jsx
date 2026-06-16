@@ -1,83 +1,41 @@
 // TOP NAVIGATION BAR
-// Appears on every page. Shows the DentBloom logo and main nav links.
-// On mobile, collapses to a hamburger menu.
+import { NavLink, Link } from "react-router-dom";
+import { useStars } from "../../data/StarsContext";
 
-import { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import "./TopNav.css";
-
-const NAV_LINKS = [
-  { to: "/",           label: "Home",             icon: "🏠" },
-  { to: "/songs",      label: "Songs",             icon: "🎵" },
-  { to: "/activities", label: "Activities",        icon: "🎨" },
-  { to: "/resources/movement-cards", label: "Movement Cards", icon: "💃" },
-  { to: "/resources/parents",  label: "Parents",   icon: "👨‍👩‍👧" },
-  { to: "/resources/teachers", label: "Teachers",  icon: "🏫" },
-  { to: "/about",      label: "About Bloomy",      icon: "🌸" },
+const LINKS = [
+  { to: "/",          label: "Home",       end: true },
+  { to: "/songs",     label: "Songs" },
+  { to: "/stories",   label: "Stories" },
+  { to: "/activities",label: "Activities" },
+  { to: "/animals",   label: "Animal Friends" },
+  { to: "/parents",   label: "For Parents" },
+  { to: "/educators", label: "For Educators" },
 ];
 
 export default function TopNav() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
-
-  const closeMenu = () => setMenuOpen(false);
-
+  const { stars } = useStars();
   return (
     <nav className="top-nav">
-      <div className="nav-inner">
-
-        {/* Logo */}
-        <Link to="/" className="nav-logo" onClick={closeMenu}>
-          <img
-            src="/assets/logo/dentbloom-logo.png"
-            alt="DentBloom"
+      <div className="top-nav-inner">
+        <Link to="/" className="nav-logo">
+          <img src="/assets/logo/dentbloom-logo.png" alt="DentBloom"
             className="nav-logo-img"
-            onError={(e) => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
+            onError={(e) => { e.target.style.display = "none"; e.target.nextSibling.style.display = "inline"; }}
           />
-          <span className="nav-logo-fallback">🌸 DentBloom</span>
+          <span className="nav-logo-text" style={{ display: "none" }}>Dent<span>Bloom</span></span>
         </Link>
 
-        {/* Desktop nav links */}
         <div className="nav-links">
-          {NAV_LINKS.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === "/"}
-              className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-            >
-              {link.label}
+          {LINKS.map(l => (
+            <NavLink key={l.to} to={l.to} end={l.end}
+              className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+              {l.label}
             </NavLink>
           ))}
         </div>
 
-        {/* Hamburger (mobile) */}
-        <button
-          className={`hamburger ${menuOpen ? "open" : ""}`}
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label="Toggle menu"
-        >
-          <span /><span /><span />
-        </button>
+        <Link to="/rewards" className="nav-star">⭐ {stars}</Link>
       </div>
-
-      {/* Mobile dropdown menu */}
-      {menuOpen && (
-        <div className="mobile-menu">
-          {NAV_LINKS.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === "/"}
-              className={({ isActive }) => `mobile-link ${isActive ? "active" : ""}`}
-              onClick={closeMenu}
-            >
-              <span className="mobile-link-icon">{link.icon}</span>
-              {link.label}
-            </NavLink>
-          ))}
-        </div>
-      )}
     </nav>
   );
 }

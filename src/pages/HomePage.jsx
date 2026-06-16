@@ -1,115 +1,105 @@
 // HOME PAGE
+// Simple, immediate, child-friendly.
+// 4 big colourful tiles + Today's Smile Adventure button.
 
 import { Link } from "react-router-dom";
-import { SONGS, ACTIVITIES } from "../data/content";
-import { AssetImage } from "../components/ui/shared";
+import { useStars } from "../data/StarsContext";
+import { AssetImg } from "../components/ui/shared";
 import "./HomePage.css";
 
-const QUICK_LINKS = [
-  { to: "/songs",                    icon: "🎵", label: "Songs",          color: "#C8EFE3", text: "#2A7A64" },
-  { to: "/activities",               icon: "🎨", label: "Activities",     color: "#FFD6DC", text: "#A8354F" },
-  { to: "/resources/movement-cards", icon: "💃", label: "Movement Cards", color: "#C8E8FF", text: "#2E6A9A" },
-  { to: "/resources/parents",        icon: "👨‍👩‍👧", label: "For Parents",    color: "#FFF3C4", text: "#8A6400" },
-  { to: "/resources/teachers",       icon: "🏫", label: "For Teachers",   color: "#E0D4F5", text: "#5A3EA0" },
-  { to: "/about",                    icon: "🌸", label: "About Bloomy",   color: "#FFE5C8", text: "#9A5A1A" },
+const TILES = [
+  { to: "/songs",      label: "Songs",          emoji: "🎵", color: "#085a64" },
+  { to: "/stories",    label: "Stories",         emoji: "📖", color: "#fd5946" },
+  { to: "/activities", label: "Activities",      emoji: "🎨", color: "#7c8d09" },
+  { to: "/rewards",    label: "My Stars",        emoji: "⭐", color: "#b8860b" },
 ];
 
 export default function HomePage() {
+  const { stars } = useStars();
+
   return (
-    <div className="home-page">
+    <div className="home-page page">
 
-      {/* ── Hero ── */}
-      <section className="hero">
-        <div className="hero-text">
-          <div className="hero-eyebrow">🌸 Healthy Smiles for Little Ones</div>
-          <h1>Songs, activities &amp; resources for happy teeth!</h1>
-          <p className="subtitle">
-            DentBloom makes dental health fun, gentle, and memorable for toddlers and preschoolers aged 2–6.
-          </p>
-          <div className="hero-cta">
-            <Link to="/songs" className="btn btn-primary">Explore Songs 🎵</Link>
-            <Link to="/activities" className="btn btn-secondary">See Activities</Link>
+      {/* Logo + greeting */}
+      <div className="home-header">
+        <div className="home-logo-wrap">
+          <img
+            src="/assets/logo/dentbloom-logo.png"
+            alt="DentBloom"
+            className="home-logo"
+            onError={(e) => {
+              e.target.style.display = "none";
+              e.target.nextSibling.style.display = "flex";
+            }}
+          />
+          <div className="home-logo-fallback" style={{ display: "none" }}>
+            <span style={{ fontFamily: "var(--font-display)", fontSize: "2rem", color: "var(--teal)" }}>
+              Dent<span style={{ color: "var(--coral)" }}>Bloom</span>
+            </span>
+            <span style={{ fontSize: "0.7rem", color: "var(--text-light)", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+              Smiles · Routines · Confidence
+            </span>
           </div>
         </div>
 
-        <div className="hero-characters">
-          <div className="hero-char-row">
-            <div className="hero-char-bubble">
-              <AssetImage src="/assets/characters/bloomy.png" alt="Bloomy" width={64} height={64} />
-            </div>
-            <div className="hero-char-bubble">
-              <AssetImage src="/assets/characters/luna.png" alt="Luna" width={64} height={64} />
-            </div>
-          </div>
-          <div className="hero-char-row">
-            <div className="hero-char-bubble">
-              <AssetImage src="/assets/characters/teo.png" alt="Teo" width={64} height={64} />
-            </div>
-            <div className="hero-char-bubble">
-              <AssetImage src="/assets/characters/lumy-fairy.png" alt="Lumy" width={64} height={64} />
-            </div>
-          </div>
-        </div>
-      </section>
+        {/* Star count */}
+        {stars > 0 && (
+          <Link to="/rewards" className="home-stars-badge">
+            ⭐ {stars} star{stars !== 1 ? "s" : ""}
+          </Link>
+        )}
+      </div>
 
-      {/* ── Quick Links ── */}
-      <section className="section">
-        <div className="quick-links">
-          {QUICK_LINKS.map((link) => (
-            <Link key={link.to} to={link.to} className="quick-link" style={{ background: link.color, color: link.text }}>
-              <span className="ql-icon">{link.icon}</span>
-              <span className="ql-label">{link.label}</span>
-              <span className="ql-arrow">›</span>
-            </Link>
-          ))}
+      {/* Characters strip */}
+      <div className="home-characters">
+        <div className="char-bubble">
+          <AssetImg src="/assets/characters/luna.png" alt="Luna" width={70} height={70} />
         </div>
-      </section>
+        <div className="char-bubble char-bubble-large">
+          <AssetImg src="/assets/characters/bloomy.png" alt="Bloomy" width={90} height={90} />
+        </div>
+        <div className="char-bubble">
+          <AssetImg src="/assets/characters/teo.png" alt="Teo" width={70} height={70} />
+        </div>
+      </div>
 
-      {/* ── Featured Songs ── */}
-      <section className="section">
-        <div className="section-header">
-          <span style={{ fontSize: "1.4rem" }}>🎵</span>
-          <h2>Featured Songs</h2>
-          <Link to="/songs" className="see-all">See all →</Link>
+      {/* Today's Smile Adventure CTA */}
+      <Link to="/adventure" className="adventure-btn">
+        <span className="adventure-icon">🌟</span>
+        <div>
+          <div className="adventure-title">Today's Smile Adventure</div>
+          <div className="adventure-sub">Song → Story → Activity → Reward</div>
         </div>
-        <div className="grid-3">
-          {SONGS.slice(0, 3).map((song) => (
-            <Link key={song.id} to={`/songs/${song.slug}`} className="card">
-              <div className="card-header-strip" style={{ background: song.color }}>
-                <span style={{ fontSize: "3rem" }}>{song.emoji}</span>
-              </div>
-              <div className="card-body">
-                <div className="card-title">{song.title}</div>
-                <div className="card-meta">⏱ {song.duration}</div>
-                <div className="card-desc">{song.description}</div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+        <span className="adventure-arrow">›</span>
+      </Link>
 
-      {/* ── Featured Activities ── */}
-      <section className="section">
-        <div className="section-header">
-          <span style={{ fontSize: "1.4rem" }}>🎨</span>
-          <h2>Activities</h2>
-          <Link to="/activities" className="see-all">See all →</Link>
-        </div>
-        <div className="grid-2">
-          {ACTIVITIES.slice(0, 2).map((act) => (
-            <Link key={act.id} to={`/activities/${act.id}`} className="card">
-              <div className="card-header-strip" style={{ background: act.color }}>
-                <span style={{ fontSize: "3rem" }}>{act.emoji}</span>
-              </div>
-              <div className="card-body">
-                <div className="card-title">{act.title}</div>
-                <div className="card-meta">👶 {act.ageRange} &nbsp;·&nbsp; ⏱ {act.duration}</div>
-                <div className="card-desc">{act.description}</div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* 4 Main tiles */}
+      <div className="home-tiles">
+        {TILES.map((tile) => (
+          <Link
+            key={tile.to}
+            to={tile.to}
+            className="big-tile"
+            style={{ background: `linear-gradient(140deg, ${tile.color}, ${tile.color}dd)` }}
+          >
+            <span className="big-tile-icon">{tile.emoji}</span>
+            <span className="big-tile-label">{tile.label}</span>
+          </Link>
+        ))}
+      </div>
+
+      {/* Secondary links */}
+      <div className="home-secondary">
+        <Link to="/animals" className="secondary-link">
+          <span>🐾</span> Animal Friends
+        </Link>
+        <Link to="/parents" className="secondary-link">
+          <span>👨‍👩‍👧</span> For Parents
+        </Link>
+        <Link to="/educators" className="secondary-link">
+          <span>🏫</span> For Educators
+        </Link>
+      </div>
 
     </div>
   );
