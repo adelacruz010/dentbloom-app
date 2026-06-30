@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ANIMALS } from "../../data/content";
 import { AssetImg, EarnStarBtn } from "../../components/ui/shared";
 import { useStars } from "../../data/StarsContext";
+import CelebrationPopup from "../../components/ui/CelebrationPopup";
 import { useState } from "react";
 import "./AnimalsPage.css";
 
@@ -13,18 +14,17 @@ export function AnimalsPage() {
       <Link to="/" className="back-btn">← Home</Link>
       <h1>Animal Friends 🐾</h1>
       <p className="subtitle" style={{ marginBottom: 28 }}>
-        Meet our animal friends — each one has a fun movement activity and loves healthy teeth!
+        Tap a friend to play and earn a star!
       </p>
       <div className="animals-grid">
         {ANIMALS.map((animal) => (
           <Link key={animal.id} to={`/animals/${animal.id}`} className="animal-card" style={{ borderColor: animal.color }}>
             <div className="animal-card-top" style={{ background: animal.color }}>
               <div className="animal-emoji-ph">{animal.emoji}</div>
-              <AssetImg src={animal.imageSrc} alt={animal.name} width={90} height={90} style={{ position: "absolute", bottom: 0 }} />
+              <AssetImg src={animal.imageSrc} alt={animal.name} width={150} height={150} style={{ position: "absolute", bottom: 0 }} />
             </div>
             <div className="animal-card-body">
               <div className="animal-name">{animal.name}</div>
-              <div className="animal-desc">{animal.description.slice(0, 60)}…</div>
             </div>
           </Link>
         ))}
@@ -39,11 +39,16 @@ export function AnimalDetailPage() {
   const animal = ANIMALS.find(a => a.id === id);
   const { addStar } = useStars();
   const [starred, setStarred] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   if (!animal) return <div className="page"><Link to="/animals" className="back-btn">← Animals</Link><h2>Not found</h2></div>;
 
   const handleEarn = () => {
-    if (!starred) { addStar(); setStarred(true); }
+    if (!starred) {
+      addStar();
+      setStarred(true);
+      setShowCelebration(true);
+    }
   };
 
   return (
@@ -51,7 +56,8 @@ export function AnimalDetailPage() {
       <Link to="/animals" className="back-btn">← Animal Friends</Link>
 
       <div className="animal-hero" style={{ background: animal.color }}>
-        <div className="animal-hero-emoji">{animal.emoji}</div>
+        <AssetImg src={animal.imageSrc} alt={animal.name} width={150} height={150} style={{ margin: "0 auto 10px" }} />
+        <div className="animal-hero-emoji" style={{ display: "none" }}>{animal.emoji}</div>
         <h1>{animal.name}</h1>
         <p style={{ fontWeight: 700, color: "var(--text-mid)", marginTop: 6 }}>{animal.description}</p>
       </div>
@@ -79,7 +85,7 @@ export function AnimalDetailPage() {
         </div>
       </div>
 
-      <div style={{ textAlign: "center", marginTop: 32 }}>
+      <div style={{ textAlign: "center", marginTop: 32, marginBottom: 12 }}>
         {!starred ? (
           <EarnStarBtn onEarn={handleEarn} label={`⭐ I did the ${animal.name} move!`} />
         ) : (
@@ -90,6 +96,12 @@ export function AnimalDetailPage() {
           </div>
         )}
       </div>
+
+      <CelebrationPopup
+        show={showCelebration}
+        onClose={() => setShowCelebration(false)}
+        message="Wonderful!"
+      />
     </div>
   );
 }

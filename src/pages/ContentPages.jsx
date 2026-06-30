@@ -7,6 +7,7 @@ import { useState } from "react";
 import { SONGS, STORIES, ACTIVITIES, PARENT_RESOURCES, EDUCATOR_RESOURCES } from "../data/content";
 import { VideoEmbed, PDFBtn, EarnStarBtn } from "../components/ui/shared";
 import { useStars } from "../data/StarsContext";
+import CelebrationPopup from "../components/ui/CelebrationPopup";
 import "./ContentPages.css";
 
 // ── SONGS LIST ────────────────────────────────────────────────
@@ -43,10 +44,17 @@ export function SongDetailPage() {
   const song = SONGS.find(s => s.id === id);
   const { addStar } = useStars();
   const [starred, setStarred] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   if (!song) return <div className="page"><Link to="/songs" className="back-btn">← Songs</Link><h2>Song not found</h2></div>;
 
-  const handleEarn = () => { if (!starred) { addStar(); setStarred(true); } };
+  const handleEarn = () => {
+    if (!starred) {
+      addStar();
+      setStarred(true);
+      setShowCelebration(true);
+    }
+  };
 
   return (
     <div className="page content-detail-page">
@@ -115,6 +123,8 @@ export function SongDetailPage() {
           <Link to="/songs" className="back-btn" style={{ width: "100%", textAlign: "center", justifyContent: "center", display: "flex" }}>← All Songs</Link>
         </aside>
       </div>
+
+      <CelebrationPopup show={showCelebration} onClose={() => setShowCelebration(false)} message="Wonderful!" />
     </div>
   );
 }
@@ -149,14 +159,55 @@ export function StoryDetailPage() {
   const { id } = useParams();
   const story = STORIES.find(s => s.id === id);
   const [stepIndex, setStepIndex] = useState(0);
-  const { addStar } = useStars();
+  const { addStar, stars } = useStars();
   const [starred, setStarred] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   if (!story) return <div className="page"><Link to="/stories" className="back-btn">← Stories</Link><h2>Not found</h2></div>;
 
   const s = story.steps[stepIndex];
   const isLast = stepIndex === story.steps.length - 1;
-  const handleEarn = () => { if (!starred) { addStar(); setStarred(true); } };
+
+  const handleEarn = () => {
+    if (!starred) {
+      addStar();
+      setStarred(true);
+      setShowCelebration(true);
+    }
+  };
+
+  // ── Completed state: full, visually-rich finish screen (fixes empty space) ──
+  if (starred) {
+    return (
+      <div className="page content-detail-page">
+        <div className="breadcrumb"><Link to="/">Home</Link><span>›</span><Link to="/stories">Stories</Link><span>›</span><span>{story.title}</span></div>
+
+        <div className="story-complete-card">
+          <div className="story-complete-emoji">🌟</div>
+          <h1 style={{ marginBottom: 8 }}>Story Complete!</h1>
+          <p className="subtitle" style={{ marginBottom: 20 }}>You finished "{story.title}" — Bloomy is proud of you!</p>
+
+          <div className="story-complete-recap">
+            {story.steps.map((step, i) => (
+              <div key={i} className="recap-chip" style={{ background: step.bg }}>
+                <span style={{ fontSize: "1.6rem" }}>{step.emoji}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="star-earned" style={{ margin: "24px auto" }}>⭐ {stars} total stars</div>
+
+          <div className="adv-nav-row" style={{ justifyContent: "center" }}>
+            <Link to="/stories" className="btn btn-white">More Stories 📖</Link>
+            <Link to="/rewards" className="btn btn-teal">See My Stars ⭐</Link>
+            <Link to="/" className="btn btn-primary">Home 🏠</Link>
+          </div>
+        </div>
+
+        <CelebrationPopup show={showCelebration} onClose={() => setShowCelebration(false)} message="You did it!" />
+      </div>
+    );
+  }
 
   return (
     <div className="page content-detail-page">
@@ -179,9 +230,7 @@ export function StoryDetailPage() {
         {stepIndex > 0 && <button className="btn btn-white" onClick={() => setStepIndex(i => i - 1)}>← Back</button>}
         {!isLast
           ? <button className="btn btn-teal" onClick={() => setStepIndex(i => i + 1)}>Next →</button>
-          : !starred
-            ? <EarnStarBtn onEarn={handleEarn} label="⭐ I finished the story!" />
-            : <div className="star-earned">⭐ Star earned!</div>
+          : <EarnStarBtn onEarn={handleEarn} label="⭐ I finished the story!" />
         }
       </div>
     </div>
@@ -219,10 +268,17 @@ export function ActivityDetailPage() {
   const act = ACTIVITIES.find(a => a.id === id);
   const { addStar } = useStars();
   const [starred, setStarred] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   if (!act) return <div className="page"><Link to="/activities" className="back-btn">← Activities</Link><h2>Not found</h2></div>;
 
-  const handleEarn = () => { if (!starred) { addStar(); setStarred(true); } };
+  const handleEarn = () => {
+    if (!starred) {
+      addStar();
+      setStarred(true);
+      setShowCelebration(true);
+    }
+  };
 
   return (
     <div className="page content-detail-page">
@@ -248,13 +304,26 @@ export function ActivityDetailPage() {
         </div>
       </section>
 
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginTop: 8 }}>
-        <PDFBtn label="Download Activity Sheet" file={act.pdfSrc} />
-        {!starred
-          ? <EarnStarBtn onEarn={handleEarn} label="⭐ I did this activity!" />
-          : <div className="star-earned">⭐ Star earned!</div>
-        }
-      </div>
+      {/* Fills the empty space below instructions with a visual "you'll need" + actions panel */}
+      <section className="detail-section activity-bottom-panel">
+        <div className="activity-bottom-card">
+          <div style={{ fontSize: "2.2rem" }}>{act.emoji}</div>
+          <div>
+            <div style={{ fontFamily: "var(--font-display)", color: "var(--teal)", fontSize: "1rem" }}>Ready to play?</div>
+            <div style={{ fontSize: "0.85rem", color: "var(--text-mid)", fontWeight: 700 }}>Grab your materials and let's go!</div>
+          </div>
+        </div>
+
+        <div className="activity-actions-row">
+          <PDFBtn label="Download Activity Sheet" file={act.pdfSrc} />
+          {!starred
+            ? <EarnStarBtn onEarn={handleEarn} label="⭐ I did this activity!" />
+            : <div className="star-earned">⭐ Star earned!</div>
+          }
+        </div>
+      </section>
+
+      <CelebrationPopup show={showCelebration} onClose={() => setShowCelebration(false)} message="Amazing job!" />
     </div>
   );
 }

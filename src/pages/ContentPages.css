@@ -110,6 +110,56 @@
 
 .adv-nav-row { display: flex; gap: 12px; flex-wrap: wrap; }
 
+/* ── Story completion screen (replaces sparse old finish state) ── */
+.story-complete-card {
+  background: linear-gradient(160deg, var(--mint) 0%, var(--white) 100%);
+  border-radius: var(--r-xl);
+  padding: clamp(32px, 6vw, 56px) clamp(24px, 5vw, 40px);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  border: 3px solid var(--border);
+}
+.story-complete-emoji {
+  font-size: 4.5rem;
+  margin-bottom: 12px;
+  animation: starBounce 0.7s ease-in-out both;
+}
+.story-complete-recap {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 8px 0 4px;
+}
+.recap-chip {
+  width: 54px; height: 54px;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--border);
+}
+
+/* ── Activity bottom panel — fills empty space below instructions ── */
+.activity-bottom-panel { margin-bottom: 16px; }
+.activity-bottom-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--cream-dark);
+  border-radius: var(--r-lg);
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  border: 2px dashed var(--border-mid);
+}
+.activity-actions-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
   .detail-layout   { grid-template-columns: 1fr; }
   .detail-sidebar  { position: static; flex-direction: row; flex-wrap: wrap; gap: 12px; }

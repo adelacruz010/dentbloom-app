@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useStars } from "../../data/StarsContext";
 import { SONGS, STORIES, ACTIVITIES } from "../../data/content";
 import { VideoEmbed } from "../../components/ui/shared";
+import CelebrationPopup from "../../components/ui/CelebrationPopup";
 import "./AdventurePage.css";
 
 const STEPS = ["intro", "song", "story", "activity", "reward"];
@@ -16,6 +17,7 @@ export default function AdventurePage() {
   const [storyIndex, setStoryIndex] = useState(0);
   const { addStar, stars } = useStars();
   const navigate = useNavigate();
+  const [showCelebration, setShowCelebration] = useState(false);
 
   // Use first song, first story, first activity for the adventure
   const song     = SONGS[0];
@@ -29,6 +31,7 @@ export default function AdventurePage() {
 
   const finishAdventure = () => {
     addStar();
+    setShowCelebration(true);
     setStep("reward");
   };
 
@@ -165,7 +168,27 @@ export default function AdventurePage() {
         <p style={{ fontSize: "1.1rem", color: "var(--text-mid)", fontWeight: 700, marginBottom: 20 }}>
           You completed Today's Smile Adventure!
         </p>
-        <div style={{ background: "white", borderRadius: "var(--r-lg)", padding: "16px 28px", display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24, boxShadow: "var(--shadow-sm)" }}>
+
+        {/* Recap of what was completed - fills empty space, shows accomplishment */}
+        <div className="adventure-recap">
+          <div className="recap-item">
+            <span className="recap-emoji">🎵</span>
+            <span className="recap-label">{song.title}</span>
+            <span className="recap-check">✓</span>
+          </div>
+          <div className="recap-item">
+            <span className="recap-emoji">📖</span>
+            <span className="recap-label">{story.title}</span>
+            <span className="recap-check">✓</span>
+          </div>
+          <div className="recap-item">
+            <span className="recap-emoji">🎨</span>
+            <span className="recap-label">{activity.title}</span>
+            <span className="recap-check">✓</span>
+          </div>
+        </div>
+
+        <div style={{ background: "white", borderRadius: "var(--r-lg)", padding: "16px 28px", display: "inline-flex", alignItems: "center", gap: 10, margin: "20px 0 24px", boxShadow: "var(--shadow-sm)" }}>
           <span style={{ fontSize: "2rem" }}>⭐</span>
           <span style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", color: "var(--teal)" }}>
             {stars} star{stars !== 1 ? "s" : ""} earned!
@@ -176,6 +199,8 @@ export default function AdventurePage() {
           <Link to="/" className="btn btn-white">Back to Home 🏠</Link>
         </div>
       </div>
+
+      <CelebrationPopup show={showCelebration} onClose={() => setShowCelebration(false)} message="Wonderful!" />
     </div>
   );
 }
