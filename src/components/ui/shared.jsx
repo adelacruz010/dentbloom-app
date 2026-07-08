@@ -37,9 +37,28 @@ export function VideoEmbed({ videoUrl, title }) {
       <p style={{ fontWeight: 700, fontSize: "0.9rem" }}>Video coming soon</p>
     </div>
   );
+
+  // Local video file (mp4)
+  if (videoUrl.endsWith(".mp4") || videoUrl.endsWith(".webm")) {
+    return (
+      <div style={{ borderRadius: "var(--r-md)", overflow: "hidden", aspectRatio: "16/9", width: "100%", background: "#000" }}>
+        <video
+          controls
+          style={{ width: "100%", height: "100%", display: "block" }}
+          playsInline
+        >
+          <source src={videoUrl} type="video/mp4" />
+          Your browser does not support video.
+        </video>
+      </div>
+    );
+  }
+
+  // YouTube embed
   return (
-    <div style={{ borderRadius: "var(--r-md)", overflow: "hidden", aspectRatio: "16/9" }}>
-      <iframe src={videoUrl} title={title} allowFullScreen style={{ width: "100%", height: "100%", border: "none" }} />
+    <div style={{ borderRadius: "var(--r-md)", overflow: "hidden", aspectRatio: "16/9", width: "100%" }}>
+      <iframe src={videoUrl} title={title} allowFullScreen
+        style={{ width: "100%", height: "100%", border: "none" }} />
     </div>
   );
 }
