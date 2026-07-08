@@ -39,7 +39,7 @@ export const SONGS = [
     color: "#7c8d09",
     duration: "2:00",
     description: "Count down from 10 while brushing — perfect for building routine!",
-    videoUrl: "/assets/videos/brush-brush-brush.mp4",
+    videoUrl: "/assets/videos/toothbrushing-countdown.mp4",
     audioSrc: "/assets/songs/toothbrushing-countdown.mp3",
     coverSrc: "/assets/songs/covers/toothbrushing-countdown.jpg",
     lyrics: [
