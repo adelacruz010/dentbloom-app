@@ -152,7 +152,7 @@ export const SONGS = [
     color: "#fd5946",
     duration: "1:59",
     description: "Start the day right with a morning brushing song.",
-    videoUrl: "/assets/videos/Loomy Good Morning Smiles Dance",
+    videoUrl: "/assets/videos/Loomy Good Morning Smiles Dance.mp4",
     audioSrc: "/assets/songs/Good morning smiles song.mp3",
     coverSrc: "/assets/songs/covers/Loomy Good Morning Smiles Dance.jpg",
     lyrics: [
