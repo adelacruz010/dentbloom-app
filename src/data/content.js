@@ -70,7 +70,7 @@ export const SONGS = [
       { step: 3, action: "Jump once when you reach number one!" },
     ],
     pdfs: [
-      { label: "Movement Card", file: "/assets/pdfs/songs/countdown-movement-card.pdf" },
+      { label: "Movement Card", file: "/assets/pdfs/songs/Toothbrushing Countdown Movement Guide.pdf" },
     ],
     tags: ["brushing", "counting"],
   },
