@@ -150,7 +150,7 @@ export const SONGS = [
     title: "Good Morning Smiles",
     emoji: "🌅",
     color: "#fd5946",
-    duration: "1:45",
+    duration: "1:59",
     description: "Start the day right with a morning brushing song.",
     videoUrl: "/assets/videos/Loomy Good Morning Smiles Dance",
     audioSrc: "/assets/songs/Good morning smiles song.mp3",
