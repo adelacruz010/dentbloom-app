@@ -1,0 +1,50 @@
+/* Language Selector */
+
+.lang-selector {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--text-mid);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lang-btn:hover  { background: var(--mint); border-color: var(--teal); }
+.lang-btn:active { transform: scale(0.92); }
+.lang-btn.active {
+  background: var(--mint);
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.lang-flag  { font-size: 1.2rem; line-height: 1; }
+.lang-label { font-size: 0.9rem; }
+
+/* Large version for settings page */
+.lang-selector--large { gap: 10px; flex-wrap: wrap; }
+.lang-selector--large .lang-btn {
+  padding: 12px 24px;
+  border-width: 2.5px;
+  font-size: 1rem;
+  border-color: var(--border-mid);
+}
+.lang-selector--large .lang-btn.active {
+  background: var(--teal);
+  color: white;
+  border-color: var(--teal);
+}
+.lang-selector--large .lang-flag { font-size: 1.8rem; }
+.lang-selector--large .lang-label { font-size: 1rem; font-weight: 800; }

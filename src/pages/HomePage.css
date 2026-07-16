@@ -85,6 +85,14 @@
   gap: 14px;
   margin-bottom: 20px;
 }
+/* 6-tile variant */
+.home-tiles-6 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 400px) {
+  .home-tiles-6 { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* Secondary links row */
 .home-secondary {
