@@ -14,10 +14,7 @@ export default function RewardsPage() {
 
   return (
     <div className="page rewards-page">
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
-        <Link to="/" className="back-btn" style={{ marginBottom: 0 }}>← Home</Link>
-        <Link to="/certificates/new" className="btn btn-primary btn-sm">🏅 Create Certificate</Link>
-      </div>
+      <Link to="/" className="back-btn">← Home</Link>
       <h1>My Stars ⭐</h1>
       <p className="subtitle" style={{ marginBottom: 24 }}>Keep brushing, singing, and learning to earn more stars!</p>
 

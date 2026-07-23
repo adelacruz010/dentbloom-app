@@ -1,0 +1,118 @@
+// certificates.js
+// All certificate templates, characters, and reward messages.
+// Add new certificate characters or message types here.
+
+export const CERT_CHARACTERS = [
+  {
+    id: "bloomy",
+    name: "Bloomy",
+    emoji: "🌸",
+    color: "#085a64",
+    bodyImageSrc: "/assets/certificates/characters/bloomy-body.png",
+    facePosition: { top: "12%", left: "50%", width: "38%", transform: "translateX(-50%)" },
+    description: "The original DentBloom tooth-flower mascot!",
+  },
+  {
+    id: "cathy-carrot",
+    name: "Cathy Carrot",
+    emoji: "🥕",
+    color: "#FF8C42",
+    bodyImageSrc: "/assets/certificates/characters/cathy-carrot-body.png",
+    facePosition: { top: "10%", left: "50%", width: "36%", transform: "translateX(-50%)" },
+    description: "Loves growing in the garden!",
+  },
+  {
+    id: "tooth-fairy",
+    name: "Lumy Tooth Fairy",
+    emoji: "🧚",
+    color: "#9B7FD4",
+    bodyImageSrc: "/assets/certificates/characters/tooth-fairy-body.png",
+    facePosition: { top: "8%", left: "50%", width: "34%", transform: "translateX(-50%)" },
+    description: "The magical tooth fairy!",
+  },
+  {
+    id: "harry-hippo",
+    name: "Harry Hippo",
+    emoji: "🦛",
+    color: "#7B8FA1",
+    bodyImageSrc: "/assets/certificates/characters/harry-hippo-body.png",
+    facePosition: { top: "14%", left: "50%", width: "40%", transform: "translateX(-50%)" },
+    description: "Harry loves brushing his big teeth!",
+  },
+  {
+    id: "ellie-elephant",
+    name: "Ellie Elephant",
+    emoji: "🐘",
+    color: "#A0937D",
+    bodyImageSrc: "/assets/certificates/characters/ellie-elephant-body.png",
+    facePosition: { top: "10%", left: "50%", width: "38%", transform: "translateX(-50%)" },
+    description: "Ellie never forgets to brush!",
+  },
+  {
+    id: "kiki-kangaroo",
+    name: "Kiki Kangaroo",
+    emoji: "🦘",
+    color: "#C97B63",
+    bodyImageSrc: "/assets/certificates/characters/kiki-kangaroo-body.png",
+    facePosition: { top: "10%", left: "50%", width: "36%", transform: "translateX(-50%)" },
+    description: "Kiki hops to the dentist with a smile!",
+  },
+];
+
+// Certificate types / reward messages
+export const CERT_TYPES = [
+  {
+    id: "brave-smiley",
+    label: "Brave Smiler Award",
+    emoji: "🦷",
+    bgColor: "#C8EFE3",
+    accentColor: "#085a64",
+    defaultMessage: "is a BRAVE SMILER! You visited the dentist and were absolutely amazing!",
+    border: "mint",
+  },
+  {
+    id: "super-brusher",
+    label: "Super Brusher Certificate",
+    emoji: "🪥",
+    bgColor: "#C8E8FF",
+    accentColor: "#3A7EB5",
+    defaultMessage: "is a SUPER BRUSHER! You brush your teeth every morning and night — keep it up!",
+    border: "sky",
+  },
+  {
+    id: "star-learner",
+    label: "Star Learner Award",
+    emoji: "⭐",
+    bgColor: "#FFF3C4",
+    accentColor: "#B58C1A",
+    defaultMessage: "is a STAR LEARNER! You completed all the DentBloom activities — well done!",
+    border: "yellow",
+  },
+  {
+    id: "healthy-smiles",
+    label: "Healthy Smiles Certificate",
+    emoji: "😁",
+    bgColor: "#FFD6DC",
+    accentColor: "#C25470",
+    defaultMessage: "has the HEALTHIEST SMILE! You are doing an amazing job looking after your teeth!",
+    border: "blush",
+  },
+  {
+    id: "garden-hero",
+    label: "Garden Hero Award",
+    emoji: "🌱",
+    bgColor: "#d4f0e8",
+    accentColor: "#2E8B72",
+    defaultMessage: "is a GARDEN HERO! You grew, cooked and learned — Bloomy is so proud of you!",
+    border: "mint",
+  },
+  {
+    id: "birthday",
+    label: "Birthday Certificate",
+    emoji: "🎂",
+    bgColor: "#E0D4F5",
+    accentColor: "#6A4DB5",
+    defaultMessage: "Happy Birthday! Wishing you the biggest, brightest smile today and every day!",
+    border: "lavender",
+  },
+];

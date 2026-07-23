@@ -83,12 +83,11 @@ export default function HomePage() {
 
       {/* Secondary links */}
       <div className="home-secondary">
-        <Link to="/animals"        className="secondary-link"><span>🐾</span> {t.home.animalFriends}</Link>
-        <Link to="/characters"     className="secondary-link"><span>🌟</span> {t.nav.characters}</Link>
-        <Link to="/certificates"   className="secondary-link"><span>🏅</span> Certificates</Link>
-        <Link to="/parents"        className="secondary-link"><span>👨‍👩‍👧</span> {t.home.forParents}</Link>
-        <Link to="/educators"      className="secondary-link"><span>🏫</span> {t.home.forEducators}</Link>
-        <Link to="/settings"       className="secondary-link"><span>⚙️</span> {t.nav.settings}</Link>
+        <Link to="/animals"     className="secondary-link"><span>🐾</span> {t.home.animalFriends}</Link>
+        <Link to="/characters"  className="secondary-link"><span>🌟</span> {t.nav.characters}</Link>
+        <Link to="/parents"     className="secondary-link"><span>👨‍👩‍👧</span> {t.home.forParents}</Link>
+        <Link to="/educators"   className="secondary-link"><span>🏫</span> {t.home.forEducators}</Link>
+        <Link to="/settings"    className="secondary-link"><span>⚙️</span> {t.nav.settings}</Link>
       </div>
 
     </div>

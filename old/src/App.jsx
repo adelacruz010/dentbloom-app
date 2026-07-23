@@ -25,11 +25,6 @@ import KitchenPage from "./pages/kitchen/KitchenPage";
 import { CharactersPage, CharacterDetailPage } from "./pages/characters/CharactersPage";
 import SettingsPage from "./pages/settings/SettingsPage";
 
-// Phase 3 — Certificates
-import CertificatesHub from "./pages/certificates/CertificatesHub";
-import CertificatePage from "./pages/certificates/CertificatePage";
-import SavedCertificatesPage from "./pages/certificates/SavedCertificatesPage";
-
 // Coming soon placeholder
 function ComingSoon({ title }) {
   return (
@@ -81,11 +76,6 @@ export default function App() {
 
                 {/* Phase 2 — Settings */}
                 <Route path="/settings"            element={<SettingsPage />} />
-
-                {/* Phase 3 — Certificates */}
-                <Route path="/certificates"        element={<CertificatesHub />} />
-                <Route path="/certificates/new"    element={<CertificatePage />} />
-                <Route path="/certificates/saved"  element={<SavedCertificatesPage />} />
 
                 {/* Fallback */}
                 <Route path="*"                    element={<Navigate to="/" replace />} />

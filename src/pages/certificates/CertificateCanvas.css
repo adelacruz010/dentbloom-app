@@ -1,0 +1,170 @@
+/* Certificate Canvas Styles — the actual printable certificate */
+
+.cert-canvas-wrapper { width: 100%; }
+
+/* Action buttons row */
+.cert-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+/* ── THE CERTIFICATE ── */
+.certificate {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  min-height: 500px;
+  margin: 0 auto;
+  border-radius: var(--r-xl);
+  border: 5px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 28px 24px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  gap: 10px;
+}
+
+/* Logo row */
+.cert-logo-row { display: flex; align-items: center; gap: 10px; }
+.cert-logo {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+}
+.cert-logo-fallback { display: flex; align-items: center; }
+
+/* Certificate type title */
+.cert-type-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 4px;
+}
+
+.cert-certifies {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Character area ── */
+.cert-character-area {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0;
+}
+
+.cert-character-wrap {
+  position: relative;
+  width: 200px;
+  height: 240px;
+  border-radius: var(--r-xl);
+  border: 4px solid;
+  overflow: hidden;
+  background: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-character-body {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cert-char-emoji-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Photo overlaid on character face */
+.cert-photo-overlay {
+  position: absolute;
+  z-index: 2;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.cert-photo-face {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Child name */
+.cert-child-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  text-align: center;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* Message */
+.cert-message {
+  font-size: clamp(0.82rem, 2.2vw, 1rem);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 480px;
+  padding: 0 8px;
+}
+
+/* Emoji badge */
+.cert-emoji-badge {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: var(--shadow-md);
+  flex-shrink: 0;
+}
+
+/* Footer */
+.cert-footer {
+  width: 100%;
+  border-top: 2px solid;
+  padding-top: 14px;
+  margin-top: 4px;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.cert-footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.cert-footer-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.6; }
+.cert-footer-value { font-family: var(--font-display); font-size: 0.9rem; }
+
+@media (max-width: 500px) {
+  .cert-actions { flex-direction: column; }
+  .cert-actions .btn { width: 100%; justify-content: center; }
+  .cert-character-wrap { width: 160px; height: 192px; }
+  .certificate { padding: 24px 16px 18px; }
+}
+
+@media print {
+  .cert-actions { display: none !important; }
+}

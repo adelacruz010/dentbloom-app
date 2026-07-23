@@ -6,18 +6,17 @@ import LanguageSelector from "../ui/LanguageSelector";
 import useT from "../../i18n/useT";
 
 const getLinks = (t) => [
-  { to: "/",              label: t.nav.home,            end: true },
-  { to: "/songs",         label: t.nav.songs },
-  { to: "/stories",       label: t.nav.stories },
-  { to: "/activities",    label: t.nav.activities },
-  { to: "/animals",       label: t.nav.animals },
-  { to: "/garden",        label: t.nav.garden },
-  { to: "/kitchen",       label: t.nav.kitchen },
-  { to: "/characters",    label: t.nav.characters },
-  { to: "/certificates",  label: "🏅 Certificates" },
-  { to: "/parents",       label: t.nav.parents },
-  { to: "/educators",     label: t.nav.educators },
-  { to: "/settings",      label: "⚙️ " + t.nav.settings },
+  { to: "/",           label: t.nav.home,       end: true },
+  { to: "/songs",      label: t.nav.songs },
+  { to: "/stories",    label: t.nav.stories },
+  { to: "/activities", label: t.nav.activities },
+  { to: "/animals",    label: t.nav.animals },
+  { to: "/garden",     label: t.nav.garden },
+  { to: "/kitchen",    label: t.nav.kitchen },
+  { to: "/characters", label: t.nav.characters },
+  { to: "/parents",    label: t.nav.parents },
+  { to: "/educators",  label: t.nav.educators },
+  { to: "/settings",   label: "⚙️ " + t.nav.settings },
 ];
 
 export default function TopNav() {
