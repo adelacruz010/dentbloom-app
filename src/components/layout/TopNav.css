@@ -69,5 +69,16 @@
 
 @media (max-width: 768px) {
   .nav-links { display: none; }
-  .top-nav-inner { height: 56px; }
+  .top-nav-inner { height: 56px; padding: 0 14px; gap: 6px; }
+
+  /* Logo shrinks to make room */
+  .nav-logo-img { height: 32px; }
+
+  /* Right group: tighter gaps, smaller star badge */
+  .nav-right { gap: 4px; }
+  .nav-star   { padding: 5px 10px; font-size: 0.85rem; }
+
+  /* Language flags smaller on mobile */
+  .lang-btn   { padding: 4px 6px; }
+  .lang-flag  { font-size: 1rem; }
 }

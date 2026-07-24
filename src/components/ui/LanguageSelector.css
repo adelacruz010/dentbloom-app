@@ -33,6 +33,12 @@
 .lang-flag  { font-size: 1.2rem; line-height: 1; }
 .lang-label { font-size: 0.9rem; }
 
+/* Tighter on mobile so flags don't crowd the nav */
+@media (max-width: 480px) {
+  .lang-selector--small .lang-btn { padding: 4px 6px; gap: 2px; }
+  .lang-selector--small .lang-flag { font-size: 1rem; }
+}
+
 /* Large version for settings page */
 .lang-selector--large { gap: 10px; flex-wrap: wrap; }
 .lang-selector--large .lang-btn {

@@ -29,19 +29,20 @@ export default function HomePage() {
             onError={(e) => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
           />
           <div className="home-logo-fallback" style={{ display: "none" }}>
-            <span style={{ fontFamily: "var(--font-display)", fontSize: "2rem", color: "var(--teal)" }}>
+            <span style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", color: "var(--teal)" }}>
               Dent<span style={{ color: "var(--coral)" }}>Bloom</span>
             </span>
-            <span style={{ fontSize: "0.7rem", color: "var(--text-light)", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+            <span style={{ fontSize: "0.65rem", color: "var(--text-light)", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
               {t.home.tagline}
             </span>
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+
+        <div className="home-header-right">
           <LanguageSelector size="small" />
           {stars > 0 && (
             <Link to="/rewards" className="home-stars-badge">
-              ⭐ {stars} {stars !== 1 ? t.home.stars : t.home.star}
+              ⭐ <span className="stars-text">{stars} {stars !== 1 ? t.home.stars : t.home.star}</span>
             </Link>
           )}
         </div>
