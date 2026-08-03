@@ -278,4 +278,86 @@ export default {
     step3:           "Step 3 — Your Details",
     step4:           "Step 4 — Preview & Download",
   },
+
+  // Platform selector
+  platform: {
+    title:        "Choose your platform",
+    childcare:    "Childcare",
+    dental:       "Dental Clinics",
+    family:       "Families",
+    childcareDesc:"Premium resources for early childhood educators",
+    dentalDesc:   "Patient education for dental practices",
+    familyDesc:   "Content shared by your childcare centre",
+    comingSoon:   "Coming Soon",
+    accessCode:   "Enter Access Code",
+    accessCodePh: "Your childcare access code",
+    accessCodeBtn:"Access Family Platform",
+  },
+
+  // Main nav (new structure)
+  mainNav: {
+    home:        "Home",
+    projects:    "Projects",
+    songsVideos: "Songs & Videos",
+    cards:       "Interactive Cards",
+    printables:  "Printables",
+    favourites:  "Favourites",
+    account:     "Account",
+  },
+
+  // Projects
+  projects: {
+    title:       "Projects",
+    subtitle:    "Explore all DentBloom educational projects",
+    all:         "All Projects",
+    available:   "Available",
+    comingSoon:  "Coming Soon",
+    overview:    "Overview",
+    watch:       "Watch",
+    singMove:    "Sing & Move",
+    explore:     "Explore & Learn",
+    activities:  "Activities",
+    resources:   "Educator Resources",
+    learningGoals: "Learning Goals",
+    ageGroup:    "Age Group",
+    characters:  "Characters",
+    relatedProject: "Connects to",
+    startProject:"Start Project",
+    downloadGuide:"Download Educator Guide",
+  },
+
+  // Account
+  account: {
+    title:        "Account",
+    userType:     "Account Type",
+    administrator:"Administrator",
+    educator:     "Educator",
+    family:       "Family",
+    licenceDetails:"Licence Details",
+    inviteEducators:"Invite Educators",
+    familyCodes:  "Family Access Codes",
+    generateCode: "Generate New Code",
+    shareContent: "Shared Content",
+    settings:     "Settings",
+    language:     "Language",
+    signOut:      "Sign Out",
+    comingSoon:   "Account features coming soon",
+  },
+
+  // Recycling project
+  recycling: {
+    title:       "Recycling Project ♻️",
+    subtitle:    "Reduce, Reuse, Recycle — making a difference together!",
+    reduce:      "Reduce",
+    reuse:       "Reuse",
+    recycle:     "Recycle",
+  },
+
+  // Project connections
+  projectFlow: {
+    recycle:     "Recycle",
+    garden:      "Garden",
+    cook:        "Cook",
+    healthyHabits: "Healthy Habits",
+  },
 };

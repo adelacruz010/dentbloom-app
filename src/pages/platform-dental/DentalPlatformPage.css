@@ -1,0 +1,29 @@
+/* Dental Platform Page */
+.dental-platform-page { max-width: 700px; }
+.dental-hero {
+  background: linear-gradient(140deg, #C8E8FF, #EEF6FF);
+  border-radius: var(--r-xl); padding: 32px 28px;
+  display: flex; align-items: center; gap: 20px;
+  margin-bottom: 28px; box-shadow: var(--shadow-md);
+  flex-wrap: wrap;
+}
+.dental-hero-icon { font-size: 4rem; flex-shrink: 0; }
+.dental-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%,180px), 1fr));
+  gap: 12px; margin-bottom: 24px;
+}
+.dental-section-card {
+  background: white; border-radius: var(--r-lg);
+  padding: 16px 14px; display: flex; flex-direction: column;
+  align-items: center; gap: 8px; text-align: center;
+  box-shadow: var(--shadow-sm); border: 2px solid var(--border);
+  opacity: 0.7;
+}
+.dental-section-emoji { font-size: 2rem; }
+.dental-section-label { font-family: var(--font-display); font-size: 0.9rem; color: var(--teal); line-height: 1.3; }
+.dental-note {
+  background: var(--sky); border-radius: var(--r-lg);
+  padding: 18px 20px; font-size: 0.88rem; font-weight: 600;
+  color: var(--text-mid); line-height: 1.6;
+}

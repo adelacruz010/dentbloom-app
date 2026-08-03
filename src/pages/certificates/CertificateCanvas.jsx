@@ -1,123 +1,121 @@
 // CertificateCanvas.jsx
-// Renders the final certificate and handles PNG download and Print/PDF export.
-// Uses an HTML div (not canvas) for maximum styling flexibility.
-// The downloadPNG function uses html2canvas (loaded via CDN) to capture the div.
+// Renders a full, properly proportioned DentBloom certificate.
+// Fixed aspect ratio so it never crops.
+// Download uses html2canvas at 3x scale for print quality.
 
 import { useRef, useState } from "react";
 import "./CertificateCanvas.css";
 
-// Decorative stars scattered in the certificate background
-function Stars() {
-  const positions = [
-    { top: "8%",  left: "5%",  size: "1.4rem", opacity: 0.5 },
-    { top: "12%", left: "88%", size: "1.2rem", opacity: 0.4 },
-    { top: "30%", left: "3%",  size: "0.9rem", opacity: 0.35 },
-    { top: "28%", left: "92%", size: "1rem",   opacity: 0.4 },
-    { top: "55%", left: "6%",  size: "1.1rem", opacity: 0.3 },
-    { top: "58%", left: "90%", size: "0.8rem", opacity: 0.35 },
-    { top: "78%", left: "4%",  size: "1.3rem", opacity: 0.4 },
-    { top: "80%", left: "89%", size: "1rem",   opacity: 0.35 },
+// ── Decorative floating stars ────────────────────────────────
+function FloatingStars({ color }) {
+  const stars = [
+    { top: "10%", left: "4%",  size: "1.5rem" },
+    { top: "8%",  left: "88%", size: "1.3rem" },
+    { top: "26%", left: "2%",  size: "1rem"   },
+    { top: "24%", left: "91%", size: "1.1rem" },
+    { top: "52%", left: "3%",  size: "1.2rem" },
+    { top: "54%", left: "90%", size: "0.9rem" },
+    { top: "74%", left: "4%",  size: "1.4rem" },
+    { top: "76%", left: "88%", size: "1.1rem" },
+    { top: "88%", left: "8%",  size: "0.8rem" },
+    { top: "86%", left: "84%", size: "0.8rem" },
   ];
   return (
     <>
-      {positions.map((p, i) => (
-        <div key={i} style={{ position: "absolute", top: p.top, left: p.left, fontSize: p.size, opacity: p.opacity, pointerEvents: "none" }}>⭐</div>
+      {stars.map((s, i) => (
+        <div key={i} style={{
+          position: "absolute", top: s.top, left: s.left,
+          fontSize: s.size, color: color,
+          opacity: 0.55, pointerEvents: "none",
+          filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.1))",
+        }}>★</div>
       ))}
     </>
   );
 }
 
-// Decorative corner flourishes
-function Corners({ color }) {
-  const style = (r, rotation) => ({
-    position: "absolute", ...r,
-    width: 60, height: 60,
-    border: `4px solid ${color}`,
-    opacity: 0.3,
-    transform: `rotate(${rotation}deg)`,
-    borderRadius: 4,
+// ── Decorative corner boxes (matching screenshot) ────────────
+function CornerBoxes({ borderColor, bgColor }) {
+  const box = (pos) => ({
+    position: "absolute", ...pos,
+    width: 52, height: 52,
+    border: `3px solid ${borderColor}`,
+    borderRadius: 8,
+    background: bgColor,
+    opacity: 0.7,
   });
   return (
     <>
-      <div style={style({ top: 16, left: 16 }, 0)} />
-      <div style={style({ top: 16, right: 16 }, 90)} />
-      <div style={style({ bottom: 16, left: 16 }, -90)} />
-      <div style={style({ bottom: 16, right: 16 }, 180)} />
+      <div style={box({ top: 14, left: 14 })} />
+      <div style={box({ top: 14, right: 14 })} />
+      <div style={box({ bottom: 14, left: 14 })} />
+      <div style={box({ bottom: 14, right: 14 })} />
     </>
   );
 }
 
 export default function CertificateCanvas({
   character, certType, childName, clinicName,
-  certDate, message, photoSrc, t, onEdit
+  certDate, message, photoSrc, t, onEdit,
 }) {
-  const certRef = useRef(null);
+  const certRef       = useRef(null);
   const [downloading, setDownloading] = useState(false);
-  const [printing, setPrinting] = useState(false);
-  const [shared, setShared] = useState(false);
+  const [shared,      setShared]      = useState(false);
 
-  // ── Download as PNG ──────────────────────────────────────────
+  // ── Download PNG ─────────────────────────────────────────────
   const handleDownloadPNG = async () => {
     setDownloading(true);
     try {
-      // Dynamically load html2canvas from CDN
       if (!window.html2canvas) {
         await new Promise((resolve, reject) => {
-          const script = document.createElement("script");
-          script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
-          script.onload = resolve;
-          script.onerror = reject;
-          document.head.appendChild(script);
+          const s = document.createElement("script");
+          s.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+          s.onload = resolve; s.onerror = reject;
+          document.head.appendChild(s);
         });
       }
       const canvas = await window.html2canvas(certRef.current, {
-        scale: 2,             // 2x for crisp print quality
+        scale: 3,          // 3x for sharp print quality
         useCORS: true,
-        backgroundColor: null,
+        allowTaint: true,
+        backgroundColor: certType.bgColor,
         logging: false,
+        windowWidth: certRef.current.offsetWidth,
+        windowHeight: certRef.current.offsetHeight,
       });
       const link = document.createElement("a");
-      link.download = `DentBloom-${childName.replace(/\s+/g, "-")}-Certificate.png`;
-      link.href = canvas.toDataURL("image/png");
+      link.download = `DentBloom-${(childName || "Certificate").replace(/\s+/g, "-")}.png`;
+      link.href = canvas.toDataURL("image/png", 1.0);
       link.click();
     } catch (err) {
       console.error("Download error:", err);
-      alert("Download failed. Please try the Print option instead.");
+      alert("Download failed. Please use Print instead.");
     }
     setDownloading(false);
   };
 
-  // ── Print / Save as PDF ──────────────────────────────────────
+  // ── Print ────────────────────────────────────────────────────
   const handlePrint = () => {
-    setPrinting(true);
-    // Give browser a tick to update state, then print
-    setTimeout(() => {
-      window.print();
-      setPrinting(false);
-    }, 200);
+    setTimeout(() => window.print(), 150);
   };
 
   // ── Share ────────────────────────────────────────────────────
   const handleShare = async () => {
+    const text = `${t.shareMsg} — ${childName}`;
     if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `DentBloom Certificate — ${childName}`,
-          text: t.shareMsg,
-        });
-        setShared(true);
-        setTimeout(() => setShared(false), 2000);
-      } catch {}
+      try { await navigator.share({ title: `DentBloom Certificate — ${childName}`, text }); }
+      catch {}
     } else {
-      // Fallback: copy text to clipboard
-      await navigator.clipboard.writeText(`${t.shareMsg} — ${childName}`).catch(() => {});
-      setShared(true);
-      setTimeout(() => setShared(false), 2000);
+      await navigator.clipboard.writeText(text).catch(() => {});
     }
+    setShared(true);
+    setTimeout(() => setShared(false), 2000);
   };
 
-  const accentColor = certType.accentColor;
-  const bgColor     = certType.bgColor;
+  const ac  = certType.accentColor;   // accent colour
+  const bg  = certType.bgColor;       // background
+  // Slightly darker shade for corner boxes / border
+  const bd  = ac + "88";
 
   return (
     <div className="cert-canvas-wrapper">
@@ -128,121 +126,127 @@ export default function CertificateCanvas({
         <button className="btn btn-teal btn-sm" onClick={handleDownloadPNG} disabled={downloading}>
           {downloading ? "Preparing…" : t.downloadPNG}
         </button>
-        <button className="btn btn-primary btn-sm" onClick={handlePrint}>
-          {t.print}
-        </button>
+        <button className="btn btn-primary btn-sm" onClick={handlePrint}>{t.print}</button>
         <button className="btn btn-white btn-sm" onClick={handleShare}>
           {shared ? "Copied! ✓" : t.share}
         </button>
       </div>
 
-      {/* ── Certificate (the actual printable element) ── */}
-      <div
-        ref={certRef}
-        className="certificate"
-        style={{ background: bgColor, borderColor: accentColor }}
-        id="dentbloom-certificate"
-      >
-        <Stars />
-        <Corners color={accentColor} />
+      {/* ── Scroll container so certificate is never clipped ── */}
+      <div className="cert-scroll-wrap">
 
-        {/* Logo row */}
-        <div className="cert-logo-row">
-          <img
-            src="/assets/logo/dentbloom-logo.png"
-            alt="DentBloom"
-            className="cert-logo"
-            onError={(e) => {
-              e.target.style.display = "none";
-              e.target.nextSibling.style.display = "flex";
-            }}
-          />
-          <div className="cert-logo-fallback" style={{ display: "none", fontFamily: "Fredoka One, cursive", fontSize: "1.4rem", color: "#085a64" }}>
-            🌸 DentBloom
+        {/* THE CERTIFICATE — fixed width, auto height, never crops */}
+        <div
+          ref={certRef}
+          className="certificate"
+          style={{ background: bg, borderColor: ac }}
+          id="dentbloom-certificate"
+        >
+          <FloatingStars color={ac} />
+          <CornerBoxes borderColor={ac} bgColor={bg} />
+
+          {/* ── Logo ── */}
+          <div className="cert-logo-row">
+            <span className="cert-bloomy-icon">🌸</span>
+            <img
+              src="/assets/logo/dentbloom-logo.png"
+              alt="DentBloom"
+              className="cert-logo"
+              onError={(e) => {
+                e.target.style.display = "none";
+                e.target.nextSibling.style.display = "block";
+              }}
+            />
+            <span className="cert-logo-fallback" style={{ display: "none", fontFamily: "Fredoka One, cursive", fontSize: "1.6rem", color: "#085a64" }}>
+              <strong style={{ color: "#085a64" }}>Dent</strong><strong style={{ color: "#fd5946" }}>Bloom</strong>
+            </span>
           </div>
-        </div>
 
-        {/* Certificate type title */}
-        <div className="cert-type-title" style={{ color: accentColor }}>
-          {certType.label}
-        </div>
+          {/* ── Certificate title ── */}
+          <h2 className="cert-type-title" style={{ color: ac }}>
+            {certType.label}
+          </h2>
 
-        {/* "This certifies that" */}
-        <div className="cert-certifies" style={{ color: accentColor + "cc" }}>
-          This certificate is proudly awarded to
-        </div>
+          {/* ── "Awarded to" ── */}
+          <p className="cert-certifies" style={{ color: ac }}>
+            THIS CERTIFICATE IS PROUDLY AWARDED TO
+          </p>
 
-        {/* Character + photo composite */}
-        <div className="cert-character-area">
-          {/* Character body */}
-          <div className="cert-character-wrap" style={{ borderColor: accentColor }}>
-            {/* Photo overlaid on character face area */}
+          {/* ── Character image box ── */}
+          <div className="cert-char-box" style={{ borderColor: ac, background: bg + "cc" }}>
+            {/* Photo layered on top of character face if provided */}
             {photoSrc && (
               <div className="cert-photo-overlay" style={character.facePosition}>
                 <img src={photoSrc} alt={childName} className="cert-photo-face" />
               </div>
             )}
-            {/* Character body image */}
+
+            {/* Character body — fills the box */}
             <img
               src={character.bodyImageSrc}
               alt={character.name}
-              className="cert-character-body"
+              className="cert-char-img"
               onError={(e) => {
                 e.target.style.display = "none";
                 e.target.nextSibling.style.display = "flex";
               }}
             />
-            <div className="cert-char-emoji-fallback" style={{ display: "none" }}>
-              <span style={{ fontSize: "7rem" }}>{character.emoji}</span>
+            <div className="cert-char-emoji-fb" style={{ display: "none" }}>
+              <span>{character.emoji}</span>
             </div>
           </div>
-        </div>
 
-        {/* Child name */}
-        <div className="cert-child-name" style={{ color: accentColor }}>
-          {childName || "Your Name Here"}
-        </div>
+          {/* ── Child name ── */}
+          <h1 className="cert-child-name" style={{ color: ac }}>
+            {childName || "Your Name Here"}
+          </h1>
 
-        {/* Reward message */}
-        <div className="cert-message" style={{ color: accentColor + "cc" }}>
-          {message || certType.defaultMessage}
-        </div>
+          {/* ── Reward message ── */}
+          <p className="cert-message" style={{ color: ac }}>
+            {message || certType.defaultMessage}
+          </p>
 
-        {/* Certificate emoji badge */}
-        <div className="cert-emoji-badge" style={{ background: accentColor }}>
-          {certType.emoji}
-        </div>
-
-        {/* Footer details */}
-        <div className="cert-footer" style={{ borderTopColor: accentColor + "44" }}>
-          <div className="cert-footer-item">
-            <span className="cert-footer-label">Date</span>
-            <span className="cert-footer-value">{certDate}</span>
+          {/* ── Emoji badge ── */}
+          <div className="cert-badge" style={{ background: ac }}>
+            <span className="cert-badge-emoji">{certType.emoji}</span>
           </div>
-          {clinicName && (
+
+          {/* ── Divider ── */}
+          <div className="cert-divider" style={{ background: ac + "44" }} />
+
+          {/* ── Footer ── */}
+          <div className="cert-footer">
             <div className="cert-footer-item">
-              <span className="cert-footer-label">Presented by</span>
-              <span className="cert-footer-value">{clinicName}</span>
+              <span className="cert-footer-label" style={{ color: ac }}>DATE</span>
+              <span className="cert-footer-value" style={{ color: ac }}>{certDate}</span>
             </div>
-          )}
-          <div className="cert-footer-item">
-            <span className="cert-footer-label" style={{ opacity: 0.5 }}>{t.generatedOn}</span>
+            {clinicName && (
+              <div className="cert-footer-item">
+                <span className="cert-footer-label" style={{ color: ac }}>PRESENTED BY</span>
+                <span className="cert-footer-value" style={{ color: ac }}>{clinicName}</span>
+              </div>
+            )}
           </div>
+
+          {/* ── Generated by ── */}
+          <p className="cert-generated" style={{ color: ac }}>
+            {t.generatedOn}
+          </p>
+
         </div>
       </div>
 
-      {/* Print styles injected as a style tag */}
+      {/* Print CSS */}
       <style>{`
         @media print {
-          body > * { display: none !important; }
-          #dentbloom-certificate {
-            display: flex !important;
-            position: fixed !important;
-            top: 0 !important; left: 0 !important;
-            width: 100vw !important; height: 100vh !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
+          body > *:not(#cert-print-root) { display: none !important; }
+          .cert-actions { display: none !important; }
+          .cert-scroll-wrap { overflow: visible !important; }
+          .certificate {
+            width: 100% !important;
+            max-width: 100% !important;
             box-shadow: none !important;
+            border-radius: 0 !important;
             page-break-inside: avoid;
           }
         }

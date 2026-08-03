@@ -1,4 +1,4 @@
-// TOP NAVIGATION BAR — Phase 2
+// TOP NAVIGATION — updated for ECE platform structure
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useStars } from "../../data/StarsContext";
@@ -6,17 +6,18 @@ import LanguageSelector from "../ui/LanguageSelector";
 import useT from "../../i18n/useT";
 
 const getLinks = (t) => [
-  { to: "/",              label: t.nav.home,            end: true },
-  { to: "/songs",         label: t.nav.songs },
-  { to: "/stories",       label: t.nav.stories },
-  { to: "/activities",    label: t.nav.activities },
+  { to: "/",              label: t.mainNav?.home        || "Home",           end: true },
+  { to: "/projects",      label: t.mainNav?.projects    || "Projects" },
+  { to: "/songs",         label: t.mainNav?.songsVideos || "Songs & Videos" },
+  { to: "/activities",    label: t.mainNav?.cards       || "Activities" },
   { to: "/animals",       label: t.nav.animals },
+  { to: "/certificates",  label: "🏅 Certificates" },
   { to: "/garden",        label: t.nav.garden },
   { to: "/kitchen",       label: t.nav.kitchen },
   { to: "/characters",    label: t.nav.characters },
-  { to: "/certificates",  label: "🏅 Certificates" },
   { to: "/parents",       label: t.nav.parents },
   { to: "/educators",     label: t.nav.educators },
+  { to: "/account",       label: "👤 " + (t.account?.title || "Account") },
   { to: "/settings",      label: "⚙️ " + t.nav.settings },
 ];
 
@@ -34,11 +35,13 @@ export default function TopNav() {
             className="nav-logo-img"
             onError={(e) => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
           />
-          <span className="nav-logo-text" style={{ display: "none" }}>Dent<span style={{color:"var(--coral)"}}>Bloom</span></span>
+          <span className="nav-logo-text" style={{ display: "none" }}>
+            Dent<span style={{color:"var(--coral)"}}>Bloom</span>
+          </span>
         </Link>
 
         <div className="nav-links">
-          {links.slice(0, 6).map(l => (
+          {links.slice(0, 5).map(l => (
             <NavLink key={l.to} to={l.to} end={l.end}
               className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
               {l.label}

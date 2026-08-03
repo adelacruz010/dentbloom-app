@@ -1,4 +1,8 @@
-/* Certificate Canvas Styles — the actual printable certificate */
+/* ============================================================
+   Certificate Canvas — DentBloom
+   Fixed-width, auto-height certificate that never crops.
+   Matches the uploaded DentBloom-Angel-Certificate.png design.
+   ============================================================ */
 
 .cert-canvas-wrapper { width: 100%; }
 
@@ -7,164 +11,224 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
-  align-items: center;
+  margin-bottom: 24px;
 }
 
-/* ── THE CERTIFICATE ── */
+/* Scroll container — lets the certificate breathe on small screens */
+.cert-scroll-wrap {
+  display: flex;
+  justify-content: center;
+  /* Allow horizontal scroll on very small screens rather than clipping */
+  overflow-x: auto;
+  padding: 8px 0 24px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   THE CERTIFICATE
+   Fixed 480px wide, height is auto so it NEVER crops.
+   All inner elements use absolute or flex layout within this.
+   ══════════════════════════════════════════════════════════ */
 .certificate {
   position: relative;
-  width: 100%;
-  max-width: 680px;
-  min-height: 500px;
-  margin: 0 auto;
-  border-radius: var(--r-xl);
-  border: 5px solid;
+  width: 480px;
+  flex-shrink: 0;           /* never squish narrower than 480px */
+  border-radius: 28px;
+  border: 4px solid;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 32px 28px 24px;
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  gap: 10px;
+  padding: 32px 28px 28px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+  overflow: visible;         /* NEVER clip children */
+  gap: 0;
+  font-family: 'Fredoka One', 'Quicksand', sans-serif;
 }
 
-/* Logo row */
-.cert-logo-row { display: flex; align-items: center; gap: 10px; }
-.cert-logo {
-  height: 44px;
-  width: auto;
-  object-fit: contain;
+/* ── Logo row ── */
+.cert-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  z-index: 1;
 }
-.cert-logo-fallback { display: flex; align-items: center; }
+.cert-bloomy-icon { font-size: 1.6rem; line-height: 1; }
+.cert-logo        { height: 36px; width: auto; object-fit: contain; }
+.cert-logo-fallback { font-family: 'Fredoka One', cursive; font-size: 1.4rem; }
 
-/* Certificate type title */
+/* ── Certificate type title ── */
 .cert-type-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.75rem;
   text-align: center;
   line-height: 1.2;
-  margin-top: 4px;
+  margin: 0 0 8px;
+  z-index: 1;
 }
 
+/* ── "This certificate is..." ── */
 .cert-certifies {
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: 0.04em;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 18px;
+  opacity: 0.75;
+  z-index: 1;
 }
 
-/* ── Character area ── */
-.cert-character-area {
-  display: flex;
-  justify-content: center;
-  margin: 8px 0;
-}
-
-.cert-character-wrap {
+/* ── Character image box ── */
+.cert-char-box {
   position: relative;
-  width: 200px;
-  height: 240px;
-  border-radius: var(--r-xl);
+  width: 260px;
+  height: 280px;
+  border-radius: 28px;
   border: 4px solid;
-  overflow: hidden;
-  background: rgba(255,255,255,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  margin-bottom: 20px;
+  z-index: 1;
+  flex-shrink: 0;
 }
 
-.cert-character-body {
+.cert-char-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: contain;      /* show the full character, no cropping */
   display: block;
 }
 
-.cert-char-emoji-fallback {
+.cert-char-emoji-fb {
+  width: 100%; height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  font-size: 9rem;
 }
 
-/* Photo overlaid on character face */
+/* Photo face overlay */
 .cert-photo-overlay {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 14px rgba(0,0,0,0.25);
 }
-
 .cert-photo-face {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
 
-/* Child name */
+/* ── Child name ── */
 .cert-child-name {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem;
   text-align: center;
   line-height: 1.1;
-  letter-spacing: -0.01em;
+  margin: 0 0 10px;
+  z-index: 1;
 }
 
-/* Message */
+/* ── Message ── */
 .cert-message {
-  font-size: clamp(0.82rem, 2.2vw, 1rem);
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.95rem;
   font-weight: 700;
   text-align: center;
-  line-height: 1.6;
-  max-width: 480px;
+  line-height: 1.65;
+  margin: 0 0 18px;
   padding: 0 8px;
+  opacity: 0.85;
+  z-index: 1;
+  max-width: 380px;
 }
 
-/* Emoji badge */
-.cert-emoji-badge {
-  width: 56px; height: 56px;
+/* ── Emoji badge ── */
+.cert-badge {
+  width: 64px; height: 64px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
-  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  z-index: 1;
   flex-shrink: 0;
 }
+.cert-badge-emoji { font-size: 1.9rem; line-height: 1; }
 
-/* Footer */
-.cert-footer {
-  width: 100%;
-  border-top: 2px solid;
-  padding-top: 14px;
-  margin-top: 4px;
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-  flex-wrap: wrap;
+/* ── Divider ── */
+.cert-divider {
+  width: calc(100% - 40px);
+  height: 2px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  z-index: 1;
 }
 
+/* ── Footer ── */
+.cert-footer {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  z-index: 1;
+}
 .cert-footer-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
 }
-.cert-footer-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.6; }
-.cert-footer-value { font-family: var(--font-display); font-size: 0.9rem; }
+.cert-footer-label {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+.cert-footer-value {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.05rem;
+}
 
-@media (max-width: 500px) {
+/* ── Generated by ── */
+.cert-generated {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.45;
+  z-index: 1;
+}
+
+/* ── Floating stars ── */
+/* Stars use absolute positioning inside .certificate (position:relative) */
+
+/* ── Action buttons responsive ── */
+@media (max-width: 540px) {
   .cert-actions { flex-direction: column; }
   .cert-actions .btn { width: 100%; justify-content: center; }
-  .cert-character-wrap { width: 160px; height: 192px; }
-  .certificate { padding: 24px 16px 18px; }
 }
 
+/* ── Print ── */
 @media print {
   .cert-actions { display: none !important; }
+  .cert-scroll-wrap {
+    overflow: visible !important;
+    justify-content: flex-start !important;
+  }
+  .certificate {
+    width: 100% !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
 }

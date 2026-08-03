@@ -1,28 +1,35 @@
-// HOME PAGE — Phase 2 with i18n and new collections
+// HOME PAGE — Childcare platform home
+// Reflects the expanded Early Childhood Education vision.
+// Keeps all existing sections + adds Projects as primary nav.
+
 import { Link } from "react-router-dom";
 import { useStars } from "../data/StarsContext";
 import { AssetImg } from "../components/ui/shared";
 import LanguageSelector from "../components/ui/LanguageSelector";
 import useT from "../i18n/useT";
+import { PROJECTS } from "../data/platform";
 import "./HomePage.css";
 
 export default function HomePage() {
   const { stars } = useStars();
   const t = useT();
 
-  const TILES = [
-    { to: "/songs",      label: t.home.songs,       emoji: "🎵", color: "#085a64" },
-    { to: "/stories",    label: t.home.stories,      emoji: "📖", color: "#fd5946" },
-    { to: "/activities", label: t.home.activities,   emoji: "🎨", color: "#7c8d09" },
-    { to: "/rewards",    label: t.home.myStars,      emoji: "⭐", color: "#b8860b" },
-    { to: "/garden",     label: t.home.magicGarden,  emoji: "🌱", color: "#2e7d32" },
-    { to: "/kitchen",    label: t.home.kitchen,      emoji: "🍎", color: "#c0392b" },
+  // The 4 main feature tiles — most important first
+  const MAIN_TILES = [
+    { to: "/projects",   label: t.mainNav?.projects    || "Projects",       emoji: "📚", color: "#085a64" },
+    { to: "/songs",      label: t.mainNav?.songsVideos || "Songs & Videos", emoji: "🎵", color: "#fd5946" },
+    { to: "/activities", label: t.mainNav?.cards       || "Activities",     emoji: "🎨", color: "#7c8d09" },
+    { to: "/rewards",    label: t.home.myStars,                             emoji: "⭐", color: "#b8860b" },
   ];
+
+  // Available projects (shown on home for quick access)
+  const availableProjects = PROJECTS.filter(p => p.available);
+  const comingProjects    = PROJECTS.filter(p => !p.available).slice(0, 4);
 
   return (
     <div className="home-page page">
 
-      {/* Header row */}
+      {/* ── Header ── */}
       <div className="home-header">
         <div className="home-logo-wrap">
           <img src="/assets/logo/dentbloom-logo.png" alt="DentBloom" className="home-logo"
@@ -37,7 +44,6 @@ export default function HomePage() {
             </span>
           </div>
         </div>
-
         <div className="home-header-right">
           <LanguageSelector size="small" />
           {stars > 0 && (
@@ -48,7 +54,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Characters */}
+      {/* ── Characters ── */}
       <div className="home-characters">
         <div className="char-bubble">
           <AssetImg src="/assets/characters/luna.png" alt="Luna" width={70} height={70} />
@@ -61,7 +67,12 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Adventure button */}
+      {/* ── Platform subtitle ── */}
+      <div className="home-platform-badge">
+        <span>Early Childhood Education Platform</span>
+      </div>
+
+      {/* ── Today's Adventure CTA ── */}
       <Link to="/adventure" className="adventure-btn btn-bounce">
         <span className="adventure-icon">🌟</span>
         <div>
@@ -71,25 +82,63 @@ export default function HomePage() {
         <span className="adventure-arrow">›</span>
       </Link>
 
-      {/* 6 main tiles */}
-      <div className="home-tiles home-tiles-6">
-        {TILES.map((tile) => (
+      {/* ── Main feature tiles ── */}
+      <div className="home-tiles home-tiles-4">
+        {MAIN_TILES.map((tile) => (
           <Link key={tile.to} to={tile.to} className="big-tile"
-            style={{ background: `linear-gradient(140deg, ${tile.color}, ${tile.color}dd)` }}>
+            style={{ background: `linear-gradient(140deg, ${tile.color}, ${tile.color}cc)` }}>
             <span className="big-tile-icon">{tile.emoji}</span>
             <span className="big-tile-label">{tile.label}</span>
           </Link>
         ))}
       </div>
 
-      {/* Secondary links */}
+      {/* ── Available projects ── */}
+      {availableProjects.length > 0 && (
+        <div className="home-projects-section">
+          <div className="home-section-header">
+            <h2>📚 Projects</h2>
+            <Link to="/projects" className="see-all-link">See all →</Link>
+          </div>
+          <div className="home-projects-row">
+            {availableProjects.map(p => (
+              <Link key={p.id} to={`/projects/${p.id}`} className="home-project-chip"
+                style={{ background: p.bgColor, borderColor: p.color, color: p.color }}>
+                <span>{p.emoji}</span>
+                <span>{p.title}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Coming soon projects ── */}
+      {comingProjects.length > 0 && (
+        <div className="home-projects-section">
+          <div className="home-section-header">
+            <h2>🔜 Coming Soon</h2>
+            <Link to="/projects" className="see-all-link">View all →</Link>
+          </div>
+          <div className="home-projects-row">
+            {comingProjects.map(p => (
+              <Link key={p.id} to={`/projects/${p.id}`} className="home-project-chip home-project-chip--soon"
+                style={{ borderColor: p.color, color: p.color }}>
+                <span>{p.emoji}</span>
+                <span>{p.title}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Secondary links ── */}
       <div className="home-secondary">
-        <Link to="/animals"        className="secondary-link"><span>🐾</span> {t.home.animalFriends}</Link>
-        <Link to="/characters"     className="secondary-link"><span>🌟</span> {t.nav.characters}</Link>
-        <Link to="/certificates"   className="secondary-link"><span>🏅</span> Certificates</Link>
-        <Link to="/parents"        className="secondary-link"><span>👨‍👩‍👧</span> {t.home.forParents}</Link>
-        <Link to="/educators"      className="secondary-link"><span>🏫</span> {t.home.forEducators}</Link>
-        <Link to="/settings"       className="secondary-link"><span>⚙️</span> {t.nav.settings}</Link>
+        <Link to="/animals"      className="secondary-link"><span>🐾</span> {t.home.animalFriends}</Link>
+        <Link to="/characters"   className="secondary-link"><span>🌟</span> {t.nav.characters}</Link>
+        <Link to="/certificates" className="secondary-link"><span>🏅</span> Certificates</Link>
+        <Link to="/platform-dental" className="secondary-link"><span>🦷</span> Dental Clinics</Link>
+        <Link to="/platform-family" className="secondary-link"><span>👨‍👩‍👧</span> Families</Link>
+        <Link to="/account"      className="secondary-link"><span>👤</span> Account</Link>
       </div>
 
     </div>

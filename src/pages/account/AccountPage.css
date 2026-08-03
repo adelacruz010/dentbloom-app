@@ -1,0 +1,30 @@
+/* Account Page */
+.account-page { max-width: 580px; }
+.account-page h1 { margin-bottom: 20px; }
+
+.account-user-card {
+  display: flex; align-items: center; gap: 16px;
+  background: linear-gradient(135deg, var(--mint), var(--sky));
+  border-radius: var(--r-xl); padding: 20px 22px;
+  margin-bottom: 20px; box-shadow: var(--shadow-md);
+}
+.account-avatar {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: white; font-size: 1.8rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-sm); flex-shrink: 0;
+}
+.account-user-name { font-family: var(--font-display); font-size: 1.2rem; color: var(--teal); }
+.account-user-type { font-size: 0.8rem; font-weight: 800; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.account-section-card {
+  background: white; border-radius: var(--r-lg);
+  padding: 18px 20px; box-shadow: var(--shadow-sm);
+  border: 2px solid var(--border); margin-bottom: 10px;
+}
+.account-section-card--dim { opacity: 0.7; }
+.account-section-header {
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.account-section-title { font-family: var(--font-display); font-size: 1rem; color: var(--teal); margin-bottom: 3px; }
+.account-section-desc  { font-size: 0.8rem; font-weight: 600; color: var(--text-mid); line-height: 1.4; }
