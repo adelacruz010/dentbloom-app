@@ -1,0 +1,40 @@
+.wt-demo-page { max-width: 600px; }
+
+.wt-demo-content-area {
+  background: var(--cream-dark, #f5ede0);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  border: 2px dashed rgba(8,90,100,0.12);
+  color: #7a6060;
+  font-weight: 700;
+  margin-bottom: 0; /* WordTrio has its own top margin */
+}
+
+.wt-mission-switcher { margin-top: 28px; }
+.wt-switcher-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #b09898;
+  margin-bottom: 10px;
+}
+.wt-switcher-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.wt-switcher-chip {
+  background: white;
+  border: 2px solid rgba(8,90,100,0.12);
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #7a6060;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.wt-switcher-chip:hover,
+.wt-switcher-chip.active {
+  background: #c8efe3;
+  border-color: #085a64;
+  color: #085a64;
+}

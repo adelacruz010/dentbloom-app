@@ -5,6 +5,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { StarsProvider } from "./data/StarsContext";
 import { LanguageProvider } from "./i18n/LanguageContext";
+import { WordGardenProvider } from "./data/WordGardenContext";
 import TopNav from "./components/layout/TopNav";
 import BottomNav from "./components/layout/BottomNav";
 
@@ -30,6 +31,7 @@ import SavedCertificatesPage from "./pages/certificates/SavedCertificatesPage";
 // ── New platform pages ──────────────────────────────────────
 import PlatformSelector from "./pages/platform/PlatformSelector";
 import { ProjectsPage, ProjectDetailPage } from "./pages/projects/ProjectsPage";
+import WordTrioMissionDemo from "./pages/projects/WordTrioMissionDemo";
 import DentalPlatformPage from "./pages/platform-dental/DentalPlatformPage";
 import FamilyPlatformPage from "./pages/platform-family/FamilyPlatformPage";
 import AccountPage from "./pages/account/AccountPage";
@@ -49,6 +51,7 @@ export default function App() {
   return (
     <LanguageProvider>
       <StarsProvider>
+        <WordGardenProvider>
         <BrowserRouter>
           <div className="app-shell">
             <TopNav />
@@ -98,6 +101,10 @@ export default function App() {
                 <Route path="/platform-dental"  element={<DentalPlatformPage />} />
                 <Route path="/platform-family"  element={<FamilyPlatformPage />} />
 
+                {/* ── Word Trio mission demo ── */}
+                <Route path="/word-trio"          element={<WordTrioMissionDemo />} />
+                <Route path="/word-trio/:missionId" element={<WordTrioMissionDemo />} />
+
                 {/* ── Fallback ── */}
                 <Route path="*" element={<Navigate to="/" replace />} />
 
@@ -106,6 +113,7 @@ export default function App() {
             <BottomNav />
           </div>
         </BrowserRouter>
+        </WordGardenProvider>
       </StarsProvider>
     </LanguageProvider>
   );

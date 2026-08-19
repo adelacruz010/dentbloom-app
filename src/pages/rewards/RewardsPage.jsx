@@ -2,10 +2,13 @@
 import { Link } from "react-router-dom";
 import { useStars, MILESTONES } from "../../data/StarsContext";
 import ProgressBar from "../../components/ui/ProgressBar";
+import WordGardenView from "../../components/wordtrio/WordGardenView";
+import { useState } from "react";
 import "./RewardsPage.css";
 
 export default function RewardsPage() {
   const { stars, resetStars } = useStars();
+  const [showGarden, setShowGarden] = useState(false);
   const next = MILESTONES.find(m => m.stars > stars);
   const starsToNext = next ? next.stars - stars : 0;
   const prevMilestone = [...MILESTONES].reverse().find(m => m.stars <= stars);
@@ -106,8 +109,7 @@ export default function RewardsPage() {
       </div>
 
       {/* How to earn */}
-      <div className="earn-ways">
-        <h3>How to earn stars</h3>
+      <div className="earn-ways">        <h3>How to earn stars</h3>
         <div className="earn-grid">
           {[
             { emoji: "🎵", label: "Complete a Song" },
