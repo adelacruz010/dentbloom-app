@@ -1,446 +1,583 @@
-// wordtrio-vocabulary.js
-// ============================================================
-// ALL Word Trio vocabulary for DentBloom.
-// Rules from spec:
-//   - Concept-based IDs (plant_pot vs cooking_pot — same word, different concept)
-//   - All three languages always present
-//   - Audio paths are placeholders — add real files to /public/assets/audio/wordtrio/
-//   - Translations MUST be reviewed with Florencia before audio production
-//   - 2–3 concepts per mission max
-//   - Only use vocabulary visually present in the mission
-// ============================================================
-
-// ── AUDIO ASSET CONVENTION ────────────────────────────────────
-// /public/assets/audio/wordtrio/{conceptId}_en.mp3
-// /public/assets/audio/wordtrio/{conceptId}_es.mp3
-// /public/assets/audio/wordtrio/{conceptId}_pt.mp3
-//
-// For MVP: use browser SpeechSynthesis as fallback when audio file not found.
+// wordtrio-vocabulary.js — REVIEWED FINAL
+// ─────────────────────────────────────────────────────────────
+// Source of truth: DentBloom_LANGUAGE_MODULE_REVIEWED_FINAL
+// All 29 illustrated cards read and transcribed.
+// Audio paths: /public/assets/wordtrio/audio/[conceptId]_[lang].mp3
+// Card images: /public/assets/wordtrio/cards/[filename].png
+// ─────────────────────────────────────────────────────────────
 
 const audio = (id) => ({
-  en: `/assets/audio/wordtrio/${id}_en.mp3`,
-  es: `/assets/audio/wordtrio/${id}_es.mp3`,
-  pt: `/assets/audio/wordtrio/${id}_pt.mp3`,
+  en: `/assets/wordtrio/audio/${id}_en.mp3`,
+  es: `/assets/wordtrio/audio/${id}_es.mp3`,
+  pt: `/assets/wordtrio/audio/${id}_pt.mp3`,
 });
 
 // ── CONCEPT DICTIONARY ────────────────────────────────────────
-// Each concept:
-//   id         — unique concept ID (never just the raw word)
-//   emoji      — visual fallback when no image available
-//   imageSrc   — preferred image from existing mission artwork
-//   en/es/pt   — written words (PENDING FLORENCIA REVIEW)
-//   audio      — audio file paths
-//   projects   — which project(s) this concept appears in
-//   note       — translation notes flagged for review
+// Sourced directly from reviewed illustrated cards.
+// Every word verified from images — no placeholders.
 
 export const WORD_CONCEPTS = {
 
   // ── GARDENING ─────────────────────────────────────────────
-  seed: {
-    id: "seed",
-    emoji: "🌱",
-    imageSrc: "/assets/projects/gardening/seed.png",
-    en: "seed",
-    es: "semilla",        // ⚠️ REVIEW: confirm LATAM usage
-    pt: "semente",        // ⚠️ REVIEW: confirm Brazilian PT
-    audio: audio("seed"),
-    projects: ["gardening", "recycling"],
-    note: "Core gardening concept. Appears in multiple missions.",
+  tiny: {
+    id:"tiny", emoji:"👌",
+    imageSrc:"/assets/wordtrio/cards/gardening-m1-tiny-round-long.png",
+    en:"Tiny", es:"Pequeño", pt:"Pequeno",
+    audio:audio("tiny"), projects:["gardening"],
   },
-
-  water_garden: {
-    id: "water_garden",
-    emoji: "💧",
-    imageSrc: "/assets/projects/gardening/water.png",
-    en: "water",
-    es: "agua",
-    pt: "água",
-    audio: audio("water_garden"),
-    projects: ["gardening", "cooking", "recycling"],
-    note: "Same word reusable across projects per spec section 18.",
+  round: {
+    id:"round", emoji:"⭕",
+    imageSrc:"/assets/wordtrio/cards/gardening-m1-tiny-round-long.png",
+    en:"Round", es:"Redondo", pt:"Redondo",
+    audio:audio("round"), projects:["gardening"],
   },
-
-  sun: {
-    id: "sun",
-    emoji: "☀️",
-    imageSrc: "/assets/projects/gardening/sun.png",
-    en: "sun",
-    es: "sol",
-    pt: "sol",
-    audio: audio("sun"),
-    projects: ["gardening"],
-    note: "Same in all three — straightforward.",
+  long: {
+    id:"long", emoji:"📏",
+    imageSrc:"/assets/wordtrio/cards/gardening-m1-tiny-round-long.png",
+    en:"Long", es:"Largo", pt:"Comprido",
+    audio:audio("long"), projects:["gardening"],
   },
-
-  soil: {
-    id: "soil",
-    emoji: "🪱",
-    imageSrc: "/assets/projects/gardening/soil.png",
-    en: "soil",
-    es: "tierra",         // ⚠️ REVIEW: tierra vs suelo — regional variation
-    pt: "terra",          // ⚠️ REVIEW: terra vs solo
-    audio: audio("soil"),
-    projects: ["gardening"],
-    note: "Regional variation possible — review with Florencia.",
+  garden: {
+    id:"garden", emoji:"🌱",
+    imageSrc:"/assets/wordtrio/cards/gardening-m2-garden-smell-print.png",
+    en:"Garden", es:"Jardín", pt:"Jardim",
+    audio:audio("garden"), projects:["gardening"],
   },
-
-  plant_pot: {
-    id: "plant_pot",
-    emoji: "🪴",
-    imageSrc: "/assets/projects/gardening/plant-pot.png",
-    en: "pot",
-    es: "maceta",         // ⚠️ REVIEW: maceta is standard LATAM
-    pt: "vaso",           // ⚠️ REVIEW: vaso is Brazilian PT
-    audio: audio("plant_pot"),
-    projects: ["gardening", "recycling"],
-    note: "DIFFERENT from cooking_pot — must keep separate IDs per spec section 19.",
+  smell: {
+    id:"smell", emoji:"👃",
+    imageSrc:"/assets/wordtrio/cards/gardening-m2-garden-smell-print.png",
+    en:"Smell", es:"Oler", pt:"Cheirar",
+    audio:audio("smell"), projects:["gardening"],
   },
-
+  print_art: {
+    id:"print_art", emoji:"🖨️",
+    imageSrc:"/assets/wordtrio/cards/gardening-m2-garden-smell-print.png",
+    en:"Print", es:"Estampar", pt:"Estampar",
+    audio:audio("print_art"), projects:["gardening"],
+    note:"Art printing activity, not document printing.",
+  },
   leaf: {
-    id: "leaf",
-    emoji: "🍃",
-    imageSrc: "/assets/projects/gardening/leaf.png",
-    en: "leaf",
-    es: "hoja",
-    pt: "folha",
-    audio: audio("leaf"),
-    projects: ["gardening"],
-    note: "",
+    id:"leaf", emoji:"🍃",
+    imageSrc:"/assets/wordtrio/cards/gardening-m3-leaf-stem-height.png",
+    en:"Leaf", es:"Hoja", pt:"Folha",
+    audio:audio("leaf"), projects:["gardening"],
   },
-
+  stem: {
+    id:"stem", emoji:"🌿",
+    imageSrc:"/assets/wordtrio/cards/gardening-m3-leaf-stem-height.png",
+    en:"Stem", es:"Tallo", pt:"Caule",
+    audio:audio("stem"), projects:["gardening"],
+  },
+  height: {
+    id:"height", emoji:"📐",
+    imageSrc:"/assets/wordtrio/cards/gardening-m3-leaf-stem-height.png",
+    en:"Height", es:"Altura", pt:"Altura",
+    audio:audio("height"), projects:["gardening"],
+  },
+  sprout: {
+    id:"sprout", emoji:"🌱",
+    imageSrc:"/assets/wordtrio/cards/gardening-m4-sprout-root-grow.png",
+    en:"Sprout", es:"Brote", pt:"Broto",
+    audio:audio("sprout"), projects:["gardening"],
+  },
   root: {
-    id: "root",
-    emoji: "🌿",
-    imageSrc: "/assets/projects/gardening/root.png",
-    en: "root",
-    es: "raíz",
-    pt: "raiz",
-    audio: audio("root"),
-    projects: ["gardening"],
-    note: "",
+    id:"root", emoji:"🌿",
+    imageSrc:"/assets/wordtrio/cards/gardening-m4-sprout-root-grow.png",
+    en:"Root", es:"Raíz", pt:"Raiz",
+    audio:audio("root"), projects:["gardening"],
   },
-
-  carrot: {
-    id: "carrot",
-    emoji: "🥕",
-    imageSrc: "/assets/characters/garden/cathy-carrot.png",
-    en: "carrot",
-    es: "zanahoria",
-    pt: "cenoura",
-    audio: audio("carrot"),
-    projects: ["gardening", "cooking"],
-    note: "Cathy Carrot character — use character image.",
-  },
-
-  strawberry: {
-    id: "strawberry",
-    emoji: "🍓",
-    imageSrc: "/assets/characters/garden/ruby-strawberry.png",
-    en: "strawberry",
-    es: "fresa",          // ⚠️ REVIEW: fresa vs frutilla — LATAM varies by country
-    pt: "morango",
-    audio: audio("strawberry"),
-    projects: ["gardening", "cooking"],
-    note: "⚠️ LATAM VARIATION: fresa (Mexico/Colombia) vs frutilla (Argentina/Chile) — confirm target region.",
-  },
-
-  harvest: {
-    id: "harvest",
-    emoji: "🌾",
-    imageSrc: "/assets/projects/gardening/harvest.png",
-    en: "harvest",
-    es: "cosecha",
-    pt: "colheita",
-    audio: audio("harvest"),
-    projects: ["gardening"],
-    note: "⚠️ REVIEW with Florencia — age-appropriate term for 2–5 year olds.",
-  },
-
   grow: {
-    id: "grow",
-    emoji: "📏",
-    imageSrc: "/assets/projects/gardening/grow.png",
-    en: "grow",
-    es: "crecer",
-    pt: "crescer",
-    audio: audio("grow"),
-    projects: ["gardening"],
-    note: "⚠️ REVIEW: taller/bigger may be better for young children.",
+    id:"grow", emoji:"📈",
+    imageSrc:"/assets/wordtrio/cards/gardening-m4-sprout-root-grow.png",
+    en:"Grow", es:"Crecer", pt:"Crescer",
+    audio:audio("grow"), projects:["gardening"],
+  },
+  harvest: {
+    id:"harvest", emoji:"🌾",
+    imageSrc:"/assets/wordtrio/cards/gardening-m6-harvest-care-nature.png",
+    en:"Harvest", es:"Cosecha", pt:"Colheita",
+    audio:audio("harvest"), projects:["gardening","cooking"],
+  },
+  care: {
+    id:"care", emoji:"💛",
+    imageSrc:"/assets/wordtrio/cards/gardening-m6-harvest-care-nature.png",
+    en:"Care", es:"Cuidar", pt:"Cuidar",
+    audio:audio("care"), projects:["gardening","healthy-body"],
+  },
+  nature: {
+    id:"nature", emoji:"🦋",
+    imageSrc:"/assets/wordtrio/cards/gardening-m6-harvest-care-nature.png",
+    en:"Nature", es:"Naturaleza", pt:"Natureza",
+    audio:audio("nature"), projects:["gardening"],
   },
 
-  // ── RECYCLING ────────────────────────────────────────────
-  recycle_bin: {
-    id: "recycle_bin",
-    emoji: "🗑️",
-    imageSrc: "/assets/projects/recycling/bin.png",
-    en: "bin",            // ⚠️ REVIEW: bin vs trash can — confirm EN localisation (AU English)
-    es: "contenedor",     // ⚠️ REVIEW: basurero vs contenedor vs tacho — regional variation
-    pt: "lixeira",
-    audio: audio("recycle_bin"),
-    projects: ["recycling"],
-    note: "⚠️ REVIEW: 'bin' is Australian English. Spanish has strong regional variation.",
-  },
-
-  bottle: {
-    id: "bottle",
-    emoji: "🍶",
-    imageSrc: "/assets/projects/recycling/bottle.png",
-    en: "bottle",
-    es: "botella",
-    pt: "garrafa",
-    audio: audio("bottle"),
-    projects: ["recycling"],
-    note: "Spec section 18 — may reuse across projects.",
-  },
-
+  // ── RECYCLING ─────────────────────────────────────────────
   paper: {
-    id: "paper",
-    emoji: "📄",
-    imageSrc: "/assets/projects/recycling/paper.png",
-    en: "paper",
-    es: "papel",
-    pt: "papel",
-    audio: audio("paper"),
-    projects: ["recycling"],
-    note: "",
+    id:"paper", emoji:"📄",
+    imageSrc:"/assets/wordtrio/cards/recycling-m1-paper-plastic-metal.png",
+    en:"Paper", es:"Papel", pt:"Papel",
+    audio:audio("paper"), projects:["recycling"],
   },
-
+  plastic: {
+    id:"plastic", emoji:"🍶",
+    imageSrc:"/assets/wordtrio/cards/recycling-m1-paper-plastic-metal.png",
+    en:"Plastic", es:"Plástico", pt:"Plástico",
+    audio:audio("plastic"), projects:["recycling"],
+  },
+  metal: {
+    id:"metal", emoji:"🥫",
+    imageSrc:"/assets/wordtrio/cards/recycling-m1-paper-plastic-metal.png",
+    en:"Metal", es:"Metal", pt:"Metal",
+    audio:audio("metal"), projects:["recycling"],
+  },
   sort: {
-    id: "sort",
-    emoji: "📦",
-    imageSrc: "/assets/projects/recycling/sort.png",
-    en: "sort",
-    es: "separar",        // ⚠️ REVIEW: clasificar vs separar
-    pt: "separar",
-    audio: audio("sort"),
-    projects: ["recycling"],
-    note: "⚠️ REVIEW: age-appropriate term.",
+    id:"sort", emoji:"📦",
+    imageSrc:"/assets/wordtrio/cards/recycling-m2-sort-tray-piece.png",
+    en:"Sort", es:"Clasificar", pt:"Separar",
+    audio:audio("sort"), projects:["recycling"],
+  },
+  tray: {
+    id:"tray", emoji:"🗂️",
+    imageSrc:"/assets/wordtrio/cards/recycling-m2-sort-tray-piece.png",
+    en:"Tray", es:"Bandeja", pt:"Bandeja",
+    audio:audio("tray"), projects:["recycling","cooking"],
+  },
+  piece: {
+    id:"piece", emoji:"🧩",
+    imageSrc:"/assets/wordtrio/cards/recycling-m2-sort-tray-piece.png",
+    en:"Piece", es:"Pieza", pt:"Pedaço",
+    audio:audio("piece"), projects:["recycling"],
+  },
+  smooth: {
+    id:"smooth", emoji:"🖐️",
+    imageSrc:"/assets/wordtrio/cards/recycling-m3-smooth-rough-shiny.png",
+    en:"Smooth", es:"Liso", pt:"Liso",
+    audio:audio("smooth"), projects:["recycling"],
+  },
+  rough: {
+    id:"rough", emoji:"🤚",
+    imageSrc:"/assets/wordtrio/cards/recycling-m3-smooth-rough-shiny.png",
+    en:"Rough", es:"Rugoso", pt:"Áspero",
+    audio:audio("rough"), projects:["recycling"],
+  },
+  shiny: {
+    id:"shiny", emoji:"✨",
+    imageSrc:"/assets/wordtrio/cards/recycling-m3-smooth-rough-shiny.png",
+    en:"Shiny", es:"Brillante", pt:"Brilhante",
+    audio:audio("shiny"), projects:["recycling"],
+  },
+  handle: {
+    id:"handle", emoji:"🏺",
+    imageSrc:"/assets/wordtrio/cards/recycling-m4-handle-holes-decorate.png",
+    en:"Handle", es:"Asa", pt:"Alça",
+    audio:audio("handle"), projects:["recycling"],
+  },
+  holes: {
+    id:"holes", emoji:"⚫",
+    imageSrc:"/assets/wordtrio/cards/recycling-m4-handle-holes-decorate.png",
+    en:"Holes", es:"Agujeros", pt:"Furos",
+    audio:audio("holes"), projects:["recycling"],
+  },
+  decorate: {
+    id:"decorate", emoji:"🎨",
+    imageSrc:"/assets/wordtrio/cards/recycling-m4-handle-holes-decorate.png",
+    en:"Decorate", es:"Decorar", pt:"Decorar",
+    audio:audio("decorate"), projects:["recycling","cooking"],
+  },
+  watering_can: {
+    id:"watering_can", emoji:"🚿",
+    imageSrc:"/assets/wordtrio/cards/recycling-m5-watering-can-lid-fill.png",
+    en:"Watering Can", es:"Regadera", pt:"Regador",
+    audio:audio("watering_can"), projects:["recycling","gardening"],
+  },
+  lid: {
+    id:"lid", emoji:"🔵",
+    imageSrc:"/assets/wordtrio/cards/recycling-m5-watering-can-lid-fill.png",
+    en:"Lid", es:"Tapa", pt:"Tampa",
+    audio:audio("lid"), projects:["recycling","cooking"],
+    note:"Different concept from cap_cooking below — watering can lid.",
+  },
+  fill: {
+    id:"fill", emoji:"💧",
+    imageSrc:"/assets/wordtrio/cards/recycling-m5-watering-can-lid-fill.png",
+    en:"Fill", es:"Llenar", pt:"Encher",
+    audio:audio("fill"), projects:["recycling","cooking"],
+  },
+  play_music: {
+    id:"play_music", emoji:"▶️",
+    imageSrc:"/assets/wordtrio/cards/recycling-m5b-play-stop-sound.png",
+    en:"Play", es:"Tocar", pt:"Tocar",
+    audio:audio("play_music"), projects:["recycling"],
+    note:"Musical play — recycled instruments activity. Different from play_sport.",
+  },
+  stop: {
+    id:"stop", emoji:"⏹️",
+    imageSrc:"/assets/wordtrio/cards/recycling-m5b-play-stop-sound.png",
+    en:"Stop", es:"Parar", pt:"Parar",
+    audio:audio("stop"), projects:["recycling"],
+  },
+  sound: {
+    id:"sound", emoji:"🔊",
+    imageSrc:"/assets/wordtrio/cards/recycling-m5b-play-stop-sound.png",
+    en:"Sound", es:"Sonido", pt:"Som",
+    audio:audio("sound"), projects:["recycling"],
+  },
+  gallery: {
+    id:"gallery", emoji:"🖼️",
+    imageSrc:"/assets/wordtrio/cards/recycling-m6-gallery-celebrate-together.png",
+    en:"Gallery", es:"Galería", pt:"Galeria",
+    audio:audio("gallery"), projects:["recycling"],
+  },
+  celebrate: {
+    id:"celebrate", emoji:"🎉",
+    imageSrc:"/assets/wordtrio/cards/recycling-m6-gallery-celebrate-together.png",
+    en:"Celebrate", es:"Celebrar", pt:"Celebrar",
+    audio:audio("celebrate"), projects:["recycling"],
+  },
+  together: {
+    id:"together", emoji:"🤝",
+    imageSrc:"/assets/wordtrio/cards/recycling-m6-gallery-celebrate-together.png",
+    en:"Together", es:"Juntos", pt:"Juntos",
+    audio:audio("together"), projects:["recycling"],
   },
 
   // ── COOKING ──────────────────────────────────────────────
-  cooking_pot: {
-    id: "cooking_pot",
-    emoji: "🍲",
-    imageSrc: "/assets/projects/cooking/pot.png",
-    en: "pot",
-    es: "olla",           // ⚠️ REVIEW: DIFFERENT from plant_pot (maceta)
-    pt: "panela",         // ⚠️ REVIEW: DIFFERENT from plant_pot (vaso)
-    audio: audio("cooking_pot"),
-    projects: ["cooking"],
-    note: "DIFFERENT concept from plant_pot — separate ID per spec section 19.",
+  stick_cooking: {
+    id:"stick_cooking", emoji:"🟫",
+    imageSrc:"/assets/wordtrio/cards/cooking-m3-stick-dip-pattern.png",
+    en:"Stick", es:"Palito", pt:"Palito",
+    audio:audio("stick_cooking"), projects:["cooking"],
+    note:"Crunch stick — cooking/printing tool. Different concept from walking stick etc.",
+  },
+  dip: {
+    id:"dip", emoji:"🥣",
+    imageSrc:"/assets/wordtrio/cards/cooking-m3-stick-dip-pattern.png",
+    en:"Dip", es:"Mojar", pt:"Mergulhar",
+    audio:audio("dip"), projects:["cooking"],
+  },
+  pattern: {
+    id:"pattern", emoji:"🔷",
+    imageSrc:"/assets/wordtrio/cards/cooking-m3-stick-dip-pattern.png",
+    en:"Pattern", es:"Patrón", pt:"Padrão",
+    audio:audio("pattern"), projects:["cooking","recycling"],
+  },
+  senses: {
+    id:"senses", emoji:"👁️",
+    imageSrc:"/assets/wordtrio/cards/cooking-m5-senses-touch-food.png",
+    en:"Senses", es:"Sentidos", pt:"Sentidos",
+    audio:audio("senses"), projects:["cooking","healthy-body"],
+  },
+  touch: {
+    id:"touch", emoji:"🖐️",
+    imageSrc:"/assets/wordtrio/cards/cooking-m5-senses-touch-food.png",
+    en:"Touch", es:"Tocar", pt:"Tocar",
+    audio:audio("touch"), projects:["cooking","healthy-body"],
+  },
+  food: {
+    id:"food", emoji:"🍽️",
+    imageSrc:"/assets/wordtrio/cards/cooking-m5-senses-touch-food.png",
+    en:"Food", es:"Comida", pt:"Comida",
+    audio:audio("food"), projects:["cooking","healthy-body"],
+  },
+  share: {
+    id:"share", emoji:"🤲",
+    imageSrc:"/assets/wordtrio/cards/cooking-m6-share-circle-cap.png",
+    en:"Share", es:"Compartir", pt:"Compartilhar",
+    audio:audio("share"), projects:["cooking"],
+  },
+  circle: {
+    id:"circle", emoji:"⭕",
+    imageSrc:"/assets/wordtrio/cards/cooking-m6-share-circle-cap.png",
+    en:"Circle", es:"Círculo", pt:"Círculo",
+    audio:audio("circle"), projects:["cooking"],
+  },
+  cap_cooking: {
+    id:"cap_cooking", emoji:"🔵",
+    imageSrc:"/assets/wordtrio/cards/cooking-m6-share-circle-cap.png",
+    en:"Cap", es:"Tapa", pt:"Tampa",
+    audio:audio("cap_cooking"), projects:["cooking"],
+    note:"Cooking/baking mould cap. Different context from lid_watering_can.",
   },
 
-  bowl: {
-    id: "bowl",
-    emoji: "🥣",
-    imageSrc: "/assets/projects/cooking/bowl.png",
-    en: "bowl",
-    es: "tazón",          // ⚠️ REVIEW: tazón vs bol vs cuenco — regional variation
-    pt: "tigela",         // ⚠️ REVIEW: tigela vs bowl
-    audio: audio("bowl"),
-    projects: ["cooking"],
-    note: "⚠️ REVIEW: regional variation in Spanish.",
+  // ── HEALTHY SMILE ─────────────────────────────────────────
+  mouth: {
+    id:"mouth", emoji:"👄",
+    imageSrc:"/assets/wordtrio/cards/healthy-smile-m1-mouth-lips-tongue.png",
+    en:"Mouth", es:"Boca", pt:"Boca",
+    audio:audio("mouth"), projects:["healthy-smile","healthy-body"],
+  },
+  lips: {
+    id:"lips", emoji:"💋",
+    imageSrc:"/assets/wordtrio/cards/healthy-smile-m1-mouth-lips-tongue.png",
+    en:"Lips", es:"Labios", pt:"Lábios",
+    audio:audio("lips"), projects:["healthy-smile"],
+  },
+  tongue: {
+    id:"tongue", emoji:"👅",
+    imageSrc:"/assets/wordtrio/cards/healthy-smile-m1-mouth-lips-tongue.png",
+    en:"Tongue", es:"Lengua", pt:"Língua",
+    audio:audio("tongue"), projects:["healthy-smile","healthy-body"],
+  },
+  crunchy: {
+    id:"crunchy", emoji:"🥒",
+    imageSrc:"/assets/wordtrio/cards/healthy-smile-m4-crunchy-soft-juicy.png",
+    en:"Crunchy", es:"Crujiente", pt:"Crocante",
+    audio:audio("crunchy"), projects:["healthy-smile","cooking"],
+  },
+  soft: {
+    id:"soft", emoji:"🍌",
+    imageSrc:"/assets/wordtrio/cards/healthy-smile-m4-crunchy-soft-juicy.png",
+    en:"Soft", es:"Blando", pt:"Macio",
+    audio:audio("soft"), projects:["healthy-smile","cooking"],
+  },
+  juicy: {
+    id:"juicy", emoji:"🍉",
+    imageSrc:"/assets/wordtrio/cards/healthy-smile-m4-crunchy-soft-juicy.png",
+    en:"Juicy", es:"Jugoso", pt:"Suculento",
+    audio:audio("juicy"), projects:["healthy-smile","cooking"],
   },
 
-  wash_hands: {
-    id: "wash_hands",
-    emoji: "🙌",
-    imageSrc: "/assets/projects/cooking/wash-hands.png",
-    en: "wash hands",
-    es: "lavar las manos",
-    pt: "lavar as mãos",
-    audio: audio("wash_hands"),
-    projects: ["cooking"],
-    note: "Phrase rather than single word — short enough for display.",
+  // ── HEALTHY BODY ──────────────────────────────────────────
+  tummy: {
+    id:"tummy", emoji:"🫄",
+    imageSrc:"/assets/wordtrio/cards/healthy-body-m3-tummy-intestines-kidneys.png",
+    en:"Tummy", es:"Barriga", pt:"Barriga",
+    audio:audio("tummy"), projects:["healthy-body"],
   },
-
-  vegetable: {
-    id: "vegetable",
-    emoji: "🥦",
-    imageSrc: "/assets/projects/cooking/vegetable.png",
-    en: "vegetable",
-    es: "verdura",        // ⚠️ REVIEW: verdura vs vegetal vs hortaliza
-    pt: "legume",         // ⚠️ REVIEW: legume vs vegetal — context matters in PT
-    audio: audio("vegetable"),
-    projects: ["cooking", "gardening"],
-    note: "⚠️ REVIEW: significant regional variation. Flagged in spec section 31.",
+  intestines: {
+    id:"intestines", emoji:"🌀",
+    imageSrc:"/assets/wordtrio/cards/healthy-body-m3-tummy-intestines-kidneys.png",
+    en:"Intestines", es:"Intestinos", pt:"Intestinos",
+    audio:audio("intestines"), projects:["healthy-body"],
   },
-
-  taste: {
-    id: "taste",
-    emoji: "😋",
-    imageSrc: "/assets/projects/cooking/taste.png",
-    en: "taste",
-    es: "probar",         // ⚠️ REVIEW: probar vs saborear vs gustar
-    pt: "experimentar",   // ⚠️ REVIEW: experimentar vs provar
-    audio: audio("taste"),
-    projects: ["cooking"],
-    note: "⚠️ REVIEW flagged in spec section 31.",
+  kidneys: {
+    id:"kidneys", emoji:"🫘",
+    imageSrc:"/assets/wordtrio/cards/healthy-body-m3-tummy-intestines-kidneys.png",
+    en:"Kidneys", es:"Riñones", pt:"Rins",
+    audio:audio("kidneys"), projects:["healthy-body"],
   },
-
-  // ── ORAL HEALTH (future expansion) ────────────────────────
-  tooth: {
-    id: "tooth",
-    emoji: "🦷",
-    imageSrc: "/assets/characters/bloomy.png",
-    en: "tooth",
-    es: "diente",
-    pt: "dente",
-    audio: audio("tooth"),
-    projects: ["oral-health"],
-    note: "Spec section 30 — oral health is future expansion after gardening/cooking/recycling.",
+  water: {
+    id:"water", emoji:"💧",
+    imageSrc:"/assets/wordtrio/cards/healthy-body-m4-water-apple-carrot.png",
+    en:"Water", es:"Agua", pt:"Água",
+    audio:audio("water"), projects:["healthy-body","gardening","cooking"],
   },
-
-  toothbrush: {
-    id: "toothbrush",
-    emoji: "🪥",
-    imageSrc: "/assets/projects/oral-health/toothbrush.png",
-    en: "toothbrush",
-    es: "cepillo de dientes",
-    pt: "escova de dentes",
-    audio: audio("toothbrush"),
-    projects: ["oral-health"],
-    note: "",
+  apple: {
+    id:"apple", emoji:"🍎",
+    imageSrc:"/assets/wordtrio/cards/healthy-body-m4-water-apple-carrot.png",
+    en:"Apple", es:"Manzana", pt:"Maçã",
+    audio:audio("apple"), projects:["healthy-body","cooking"],
+  },
+  carrot: {
+    id:"carrot", emoji:"🥕",
+    imageSrc:"/assets/wordtrio/cards/healthy-body-m4-water-apple-carrot.png",
+    en:"Carrot", es:"Zanahoria", pt:"Cenoura",
+    audio:audio("carrot"), projects:["healthy-body","gardening","cooking"],
+  },
+  rest: {
+    id:"rest", emoji:"🌙",
+    imageSrc:"/assets/wordtrio/cards/healthy-body-m6-care-rest-play.png",
+    en:"Rest", es:"Descansar", pt:"Descansar",
+    audio:audio("rest"), projects:["healthy-body"],
+  },
+  play_sport: {
+    id:"play_sport", emoji:"⚽",
+    imageSrc:"/assets/wordtrio/cards/healthy-body-m6-care-rest-play.png",
+    en:"Play", es:"Jugar", pt:"Brincar",
+    audio:audio("play_sport"), projects:["healthy-body"],
+    note:"Physical play/sport. Different from play_music (musical play).",
   },
 };
 
 // ── MISSION VOCABULARY MAP ─────────────────────────────────────
-// Maps each project+mission to its 2–3 Word Trio concepts.
-// Max 3 per mission. Use only what is visually present.
-// ⚠️ Review each mission's visual content before finalising.
+// Sourced directly from reviewed illustrated cards.
+// Each entry references a card image via cardImageSrc.
 
 export const MISSION_VOCABULARY = {
 
-  // ── GARDENING ─────────────────────────────────────────────
+  // GARDENING
   "gardening-mission-1": {
-    missionTitle: "Getting Started",
-    projectId: "gardening",
-    concepts: ["seed", "soil", "plant_pot"],
-    note: "Mission 1 — introduction to planting",
+    missionTitle:"Seed Explorer",
+    projectId:"gardening",
+    cardImageSrc:"/assets/wordtrio/cards/gardening-m1-tiny-round-long.png",
+    concepts:["tiny","round","long"],
   },
   "gardening-mission-2": {
-    missionTitle: "Water & Sun",
-    projectId: "gardening",
-    concepts: ["water_garden", "sun"],
-    note: "Mission 2 — only 2 concepts, both clearly visual",
+    missionTitle:"Garden to Table",
+    projectId:"gardening",
+    cardImageSrc:"/assets/wordtrio/cards/gardening-m2-garden-smell-print.png",
+    concepts:["garden","smell","print_art"],
   },
   "gardening-mission-3": {
-    missionTitle: "Watching It Grow",
-    projectId: "gardening",
-    concepts: ["leaf", "root", "grow"],
-    note: "Mission 3 — observation",
+    missionTitle:"Garden Scientist",
+    projectId:"gardening",
+    cardImageSrc:"/assets/wordtrio/cards/gardening-m3-leaf-stem-height.png",
+    concepts:["leaf","stem","height"],
   },
   "gardening-mission-4": {
-    missionTitle: "Our Garden Friends",
-    projectId: "gardening",
-    concepts: ["carrot", "strawberry"],
-    note: "Mission 4 — characters",
-  },
-  "gardening-mission-5": {
-    missionTitle: "Harvest Time",
-    projectId: "gardening",
-    concepts: ["harvest", "vegetable"],
-    note: "Mission 5",
+    missionTitle:"Plant Scientist",
+    projectId:"gardening",
+    cardImageSrc:"/assets/wordtrio/cards/gardening-m4-sprout-root-grow.png",
+    concepts:["sprout","root","grow"],
   },
   "gardening-mission-6": {
-    missionTitle: "From Garden to Table",
-    projectId: "gardening",
-    concepts: ["carrot", "water_garden"],
-    note: "Mission 6 — intentional repetition per spec section 18",
+    missionTitle:"Harvest Hero",
+    projectId:"gardening",
+    cardImageSrc:"/assets/wordtrio/cards/gardening-m6-harvest-care-nature.png",
+    concepts:["harvest","care","nature"],
   },
 
-  // ── RECYCLING ─────────────────────────────────────────────
+  // RECYCLING
   "recycling-mission-1": {
-    missionTitle: "What Is Recycling?",
-    projectId: "recycling",
-    concepts: ["recycle_bin", "bottle"],
-    note: "Mission 1",
+    missionTitle:"Material Finder",
+    projectId:"recycling",
+    cardImageSrc:"/assets/wordtrio/cards/recycling-m1-paper-plastic-metal.png",
+    concepts:["paper","plastic","metal"],
   },
   "recycling-mission-2": {
-    missionTitle: "Sorting Materials",
-    projectId: "recycling",
-    concepts: ["paper", "bottle", "sort"],
-    note: "Mission 2",
+    missionTitle:"Sorting Star",
+    projectId:"recycling",
+    cardImageSrc:"/assets/wordtrio/cards/recycling-m2-sort-tray-piece.png",
+    concepts:["sort","tray","piece"],
   },
   "recycling-mission-3": {
-    missionTitle: "Recycled Plant Pots",
-    projectId: "recycling",
-    concepts: ["plant_pot", "seed"],
-    note: "Mission 3 — reuse from gardening per spec",
+    missionTitle:"Recycling Detective",
+    projectId:"recycling",
+    cardImageSrc:"/assets/wordtrio/cards/recycling-m3-smooth-rough-shiny.png",
+    concepts:["smooth","rough","shiny"],
   },
   "recycling-mission-4": {
-    missionTitle: "Watering Cans",
-    projectId: "recycling",
-    concepts: ["water_garden", "bottle"],
-    note: "Mission 4",
+    missionTitle:"Pot Maker",
+    projectId:"recycling",
+    cardImageSrc:"/assets/wordtrio/cards/recycling-m4-handle-holes-decorate.png",
+    concepts:["handle","holes","decorate"],
   },
-  "recycling-mission-5": {
-    missionTitle: "Garden Labels",
-    projectId: "recycling",
-    concepts: ["seed", "carrot"],
-    note: "Mission 5",
+  "recycling-mission-5a": {
+    missionTitle:"Watering Can Maker",
+    projectId:"recycling",
+    cardImageSrc:"/assets/wordtrio/cards/recycling-m5-watering-can-lid-fill.png",
+    concepts:["watering_can","lid","fill"],
+  },
+  "recycling-mission-5b": {
+    missionTitle:"Garden Musician",
+    projectId:"recycling",
+    cardImageSrc:"/assets/wordtrio/cards/recycling-m5b-play-stop-sound.png",
+    concepts:["play_music","stop","sound"],
   },
   "recycling-mission-6": {
-    missionTitle: "Recycled Crafts",
-    projectId: "recycling",
-    concepts: ["paper", "bottle"],
-    note: "Mission 6",
+    missionTitle:"Our Recycling Gallery",
+    projectId:"recycling",
+    cardImageSrc:"/assets/wordtrio/cards/recycling-m6-gallery-celebrate-together.png",
+    concepts:["gallery","celebrate","together"],
   },
 
-  // ── COOKING ──────────────────────────────────────────────
-  "cooking-mission-1": {
-    missionTitle: "Kitchen Safety",
-    projectId: "cooking",
-    concepts: ["cooking_pot", "bowl"],
-    note: "Mission 1",
-  },
-  "cooking-mission-2": {
-    missionTitle: "Washing Up",
-    projectId: "cooking",
-    concepts: ["wash_hands", "water_garden"],
-    note: "Mission 2 — water reused from gardening",
-  },
+  // COOKING
   "cooking-mission-3": {
-    missionTitle: "Healthy Ingredients",
-    projectId: "cooking",
-    concepts: ["vegetable", "carrot", "strawberry"],
-    note: "Mission 3",
-  },
-  "cooking-mission-4": {
-    missionTitle: "Prepare Together",
-    projectId: "cooking",
-    concepts: ["bowl", "vegetable"],
-    note: "Mission 4",
+    missionTitle:"Little Chef — Crunch Stick Printing",
+    projectId:"cooking",
+    cardImageSrc:"/assets/wordtrio/cards/cooking-m3-stick-dip-pattern.png",
+    concepts:["stick_cooking","dip","pattern"],
   },
   "cooking-mission-5": {
-    missionTitle: "Taste & Share",
-    projectId: "cooking",
-    concepts: ["taste", "vegetable"],
-    note: "Mission 5 — taste flagged for review",
+    missionTitle:"Taste Explorer",
+    projectId:"cooking",
+    cardImageSrc:"/assets/wordtrio/cards/cooking-m5-senses-touch-food.png",
+    concepts:["senses","touch","food"],
   },
   "cooking-mission-6": {
-    missionTitle: "Clean Up & Brush",
-    projectId: "cooking",
-    concepts: ["wash_hands", "tooth"],
-    note: "Mission 6 — natural bridge to oral health",
+    missionTitle:"Junior Chef",
+    projectId:"cooking",
+    cardImageSrc:"/assets/wordtrio/cards/cooking-m6-share-circle-cap.png",
+    concepts:["share","circle","cap_cooking"],
+  },
+
+  // HEALTHY SMILE
+  "healthy-smile-mission-1": {
+    missionTitle:"Open & Explore My Mouth",
+    projectId:"healthy-smile",
+    cardImageSrc:"/assets/wordtrio/cards/healthy-smile-m1-mouth-lips-tongue.png",
+    concepts:["mouth","lips","tongue"],
+  },
+  "healthy-smile-mission-4": {
+    missionTitle:"Smile Snack Sensory Lab",
+    projectId:"healthy-smile",
+    cardImageSrc:"/assets/wordtrio/cards/healthy-smile-m4-crunchy-soft-juicy.png",
+    concepts:["crunchy","soft","juicy"],
+  },
+
+  // HEALTHY BODY
+  "healthy-body-mission-3": {
+    missionTitle:"Organ Explorer",
+    projectId:"healthy-body",
+    cardImageSrc:"/assets/wordtrio/cards/healthy-body-m3-tummy-intestines-kidneys.png",
+    concepts:["tummy","intestines","kidneys"],
+  },
+  "healthy-body-mission-4": {
+    missionTitle:"Body Fuel Helper",
+    projectId:"healthy-body",
+    cardImageSrc:"/assets/wordtrio/cards/healthy-body-m4-water-apple-carrot.png",
+    concepts:["water","apple","carrot"],
+  },
+  "healthy-body-mission-6": {
+    missionTitle:"Healthy Body Hero",
+    projectId:"healthy-body",
+    cardImageSrc:"/assets/wordtrio/cards/healthy-body-m6-care-rest-play.png",
+    concepts:["care","rest","play_sport"],
   },
 };
 
-// ── HELPER — get concepts for a mission ───────────────────────
+// ── DISCOVERY LAB (non-vocabulary cards) ──────────────────────
+// These are educator-led science experiments, not Word Trio cards.
+// Stored here for reference — displayed as resources, not in WordTrio widget.
+export const DISCOVERY_LAB_CARDS = [
+  {
+    id:"muddy-water",
+    title:"Can Muddy Water Look Clearer?",
+    project:"recycling",
+    cardImageSrc:"/assets/wordtrio/cards/discovery-lab-muddy-water.png",
+    type:"educator-demo",
+    safetyNote:"For observation only — never drink the water.",
+  },
+  {
+    id:"tooth-drinks",
+    title:"What Happens to a Tooth?",
+    project:"healthy-smile",
+    cardImageSrc:"/assets/wordtrio/cards/discovery-lab-tooth-drinks.png",
+    type:"educator-demo",
+    safetyNote:"Eggshell is an observation model only. Not the same as tooth enamel.",
+  },
+  {
+    id:"sticky-slippery",
+    title:"Sticky or Slippery?",
+    project:"healthy-smile",
+    cardImageSrc:"/assets/wordtrio/cards/discovery-lab-sticky-slippery.png",
+    type:"educator-demo",
+    safetyNote:"Honey not suitable for under 12 months. For observation only.",
+  },
+];
+
+// ── HELPERS ───────────────────────────────────────────────────
 export function getMissionConcepts(missionId) {
   const mission = MISSION_VOCABULARY[missionId];
   if (!mission) return [];
-  return mission.concepts
-    .map(id => WORD_CONCEPTS[id])
-    .filter(Boolean);
+  return mission.concepts.map(id => WORD_CONCEPTS[id]).filter(Boolean);
 }
 
-// ── HELPER — get all concepts for a project ───────────────────
+export function getMissionCard(missionId) {
+  return MISSION_VOCABULARY[missionId]?.cardImageSrc || null;
+}
+
+export function getProjectMissions(projectId) {
+  return Object.entries(MISSION_VOCABULARY)
+    .filter(([_, m]) => m.projectId === projectId)
+    .map(([id, m]) => ({ id, ...m }));
+}
+
 export function getProjectConcepts(projectId) {
   return Object.values(MISSION_VOCABULARY)
     .filter(m => m.projectId === projectId)
     .flatMap(m => m.concepts)
-    .filter((v, i, a) => a.indexOf(v) === i) // deduplicate
+    .filter((v, i, a) => a.indexOf(v) === i)
     .map(id => WORD_CONCEPTS[id])
     .filter(Boolean);
 }

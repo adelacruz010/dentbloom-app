@@ -38,3 +38,69 @@
   border-color: #085a64;
   color: #085a64;
 }
+
+/* Card preview section */
+.wt-card-section {
+  background: white;
+  border-radius: var(--r-lg);
+  border: 2px solid var(--border-mid);
+  overflow: hidden;
+  margin: 16px 0;
+}
+.wt-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--cream-dark);
+  border-bottom: 1px solid var(--border);
+}
+.wt-card-label { font-family: var(--font-display); font-size: 0.95rem; color: var(--teal); }
+.wt-card-btns  { display: flex; gap: 8px; }
+
+.wt-card-preview {
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  background: var(--cream);
+}
+.wt-card-img {
+  max-width: 480px;
+  width: 100%;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-md);
+}
+
+/* Discovery Lab */
+.wt-discovery-section { margin: 24px 0; }
+.wt-discovery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%,260px), 1fr));
+  gap: 16px;
+}
+.wt-discovery-card {
+  background: white;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--border);
+}
+.wt-discovery-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.wt-discovery-info  { padding: 12px 14px; }
+.wt-discovery-title { font-family: var(--font-display); font-size: 0.95rem; color: var(--teal); margin-bottom: 6px; }
+.wt-discovery-safety { font-size: 0.75rem; color: var(--coral); font-weight: 700; line-height: 1.4; }
+
+@media print {
+  .wt-demo-content-area,
+  .wt-card-header .btn,
+  .wt-mission-switcher,
+  .wt-discovery-section,
+  .breadcrumb, h1, p.subtitle,
+  .wordtrio-widget { display: none !important; }
+  .wt-card-preview { padding: 0; }
+  .wt-card-img { max-width: 100%; box-shadow: none; border-radius: 0; }
+}
